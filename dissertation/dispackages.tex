@@ -1,0 +1,19 @@
+%%% Прикладные пакеты %%%
+%\usepackage{calc}               % Пакет для расчётов параметров, например длины
+
+%%% Для добавления Стр. над номерами страниц в оглавлении
+%%% http://tex.stackexchange.com/a/306950
+\usepackage{afterpage}
+
+%%% Списки %%%
+\usepackage{enumitem}
+
+%%% Оформление списка обозначений
+\usepackage[intoc,notocbasic]{nomencl}
+\makenomenclature
+\setlength{\nomitemsep}{-.8\parsep}
+% \renewcommand{\nomlabel}[1]{#1 ---}
+
+%%% Нумерация только используемых в тексте формул
+\usepackage{mathtools}
+\mathtoolsset{showonlyrefs=true}

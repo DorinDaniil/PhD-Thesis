@@ -1,0 +1,122 @@
+\pdfbookmark{Общая характеристика работы}{characteristic}             % Закладка pdf
+\section*{Общая характеристика работы}
+
+\newcommand{\actuality}{\pdfbookmark[1]{Актуальность}{actuality}\underline{\textbf{\actualityTXT}}}
+\newcommand{\progress}{\pdfbookmark[1]{Разработанность темы}{progress}\underline{\textbf{\progressTXT}}}
+\newcommand{\aim}{\pdfbookmark[1]{Цели}{aim}\underline{{\textbf\aimTXT}}}
+\newcommand{\tasks}{\pdfbookmark[1]{Задачи}{tasks}\underline{\textbf{\tasksTXT}}}
+\newcommand{\aimtasks}{\pdfbookmark[1]{Цели и задачи}{aimtasks}\aimtasksTXT}
+\newcommand{\object}{\pdfbookmark[1]{Объект исследования}{object}\underline{\textbf{\objectTXT}}}
+\newcommand{\subject}{\pdfbookmark[1]{Предмет исследования}{subject}\underline{\textbf{\subjectTXT}}}
+\newcommand{\novelty}{\pdfbookmark[1]{Научная новизна}{novelty}\underline{\textbf{\noveltyTXT}}}
+\newcommand{\tinfluence}{\pdfbookmark[1]{Теоретическая значимость}{tinfluence}\underline{\textbf{\tinfluenceTXT}}}
+\newcommand{\pinfluence}{\pdfbookmark[1]{Практическая значимость}{pinfluence}\underline{\textbf{\pinfluenceTXT}}}
+\newcommand{\methods}{\pdfbookmark[1]{Методология и методы исследования}{methods}\underline{\textbf{\methodsTXT}}}
+\newcommand{\defpositions}{\pdfbookmark[1]{Положения, выносимые на защиту}{defpositions}\underline{\textbf{\defpositionsTXT}}}
+\newcommand{\passport}{\pdfbookmark[1]{Соответствие паспорту специальности}{passport}\underline{\textbf{\passportTXT}}}
+\newcommand{\reliability}{\pdfbookmark[1]{Достоверность}{reliability}\underline{\textbf{\reliabilityTXT}}}
+\newcommand{\probation}{\pdfbookmark[1]{Апробация}{probation}\underline{\textbf{\probationTXT}}}
+\newcommand{\contribution}{\pdfbookmark[1]{Личный вклад}{contribution}\underline{\textbf{\contributionTXT}}}
+\newcommand{\publications}{\pdfbookmark[1]{Публикации}{publications}\underline{\textbf{\publicationsTXT}}}
+
+\input{common/characteristic} % Характеристика работы по структуре во введении и в автореферате не отличается (ГОСТ Р 7.0.11, пункты 5.3.1 и 9.2.1), потому её загружаем из одного и того же внешнего файла, предварительно задав форму выделения некоторым параметрам
+
+%Диссертационная работа была выполнена при поддержке грантов \dots
+
+%\underline{\textbf{Объем и структура работы.}} Диссертация состоит из~введения,
+%четырех глав, заключения и~приложения. Полный объем диссертации
+%\textbf{ХХХ}~страниц текста с~\textbf{ХХ}~рисунками и~5~таблицами. Список
+%литературы содержит \textbf{ХХX}~наименование.
+
+\pdfbookmark{Содержание работы}{description}                          % Закладка pdf
+\section*{Содержание работы}
+Во \underline{\textbf{введении}} обосновывается актуальность
+исследований, проводимых в~рамках данной диссертационной работы,
+приводится обзор научной литературы по~изучаемой проблеме,
+формулируется цель, ставятся задачи работы, излагается научная новизна
+и практическая значимость представляемой работы.
+
+\underline{\textbf{Первая глава}} носит постановочный характер и посвящена анализу задачи декодирования визуальной информации по сигналам мозга. Описываются нейробиологические модальности "--- фМРТ и ЭЭГ "--- и их взаимодополняющие пространственно-временные характеристики, приводится обзор существующих методов декодирования. Вводится единый формализм: задача декодирования состоит в построении отображения $\mathbf{g}: \mathcal{X} \to \mathcal{Y}$ из совместного пространства модальностей в пространство визуальных стимулов, которое конкретизируется тремя постановками возрастающей структурной сложности.
+
+%% TODO: краткое изложение главы 1 (2--3 абзаца с основными формулами).
+
+\underline{\textbf{Во второй главе}} рассматривается оценка гемодинамического лага~$\Delta t$ по временной динамике фМРТ. Решается обратная к декодированию задача "--- прогноз фМРТ-отклика по визуальному стимулу линейной авторегрессионной марковской моделью.
+
+%% TODO: краткое изложение главы 2 (модель приращений, ошибка восстановления,
+%% минимум на локализованной зрительной коре, согласование с нейрофизиологическими оценками).
+
+\underline{\textbf{В третьей главе}} предлагается метод пространственно-временной классификации временных рядов фМРТ в условиях ограниченной выборки, основанный на масках активности классов и проекции ковариационных матриц на касательное пространство риманова многообразия.
+
+%% TODO: краткое изложение главы 3 (суперпозиция h, маски M^y, логарифмическое отображение,
+%% сравнение с нейросетевыми моделями, анализ исключением компонент).
+
+\underline{\textbf{В четвертой главе}} предлагается мультимодальная архитектура реконструкции визуальных стимулов по одновременным сигналам фМРТ и ЭЭГ: контрастивное выравнивание совместных представлений с CLIP-пространством и двухстадийная диффузионная генерация.
+
+%% TODO: краткое изложение главы 4 (предобработка, контрастивная функция потерь,
+%% априорная модель и SDXL, CLIP-Score, кросс-доменный эксперимент).
+
+\pdfbookmark{Заключение}{conclusion}                                  % Закладка pdf
+В \underline{\textbf{заключении}} приведены основные результаты работы, которые заключаются в следующем:
+\input{common/concl}
+
+\pdfbookmark{Литература}{bibliography}                                % Закладка pdf
+
+\ifdefmacro{\microtypesetup}{\microtypesetup{protrusion=false}}{} % не рекомендуется применять пакет микротипографики к автоматически генерируемому списку литературы
+\urlstyle{rm}                               % ссылки URL обычным шрифтом
+\ifnumequal{\value{bibliosel}}{0}{% Встроенная реализация с загрузкой файла через движок bibtex8
+    \renewcommand{\bibname}{\large \bibtitleauthor}
+    \nocite{*}
+    \insertbiblioauthor           % Подключаем Bib-базы
+    %\insertbiblioexternal   % !!! bibtex не умеет работать с несколькими библиографиями !!!
+}{% Реализация пакетом biblatex через движок biber
+    % Цитирования.
+    %  * Порядок перечисления определяет порядок в библиографии (только внутри подраздела, если `\insertbiblioauthorgrouped`).
+    %  * Если не соблюдать порядок "как для \printbibliography", нумерация в `\insertbiblioauthor` будет кривой.
+    %  * Если цитировать каждый источник отдельной командой "--- найти некоторые ошибки будет проще.
+    %
+    % \nocite{}
+    \nocite{dorin2024forecasting}
+    \nocite{dorin2025enhancing}
+    \nocite{dorin2026decoding}
+    \nocite{dorin2025mmro}
+    \nocite{dorin2024conf66mipt}
+    \nocite{dorin2025conf67mipt}
+    \nocite{dorin2026conf68mipt}
+    \nocite{dorin2025aij}
+
+    \ifnumgreater{\value{usefootcite}}{0}{
+        \begin{refcontext}[labelprefix={}]
+            \ifnum \value{bibgrouped}>0
+                \insertbiblioauthorgrouped    % Вывод всех работ автора, сгруппированных по источникам
+            \else
+                \insertbiblioauthor      % Вывод всех работ автора
+            \fi
+        \end{refcontext}
+    }{
+        \ifnum \totvalue{citeexternal}>0
+            \begin{refcontext}[labelprefix=A]
+                \ifnum \value{bibgrouped}>0
+                    \insertbiblioauthorgrouped    % Вывод всех работ автора, сгруппированных по источникам
+                \else
+                    \insertbiblioauthor      % Вывод всех работ автора
+                \fi
+            \end{refcontext}
+        \else
+            \ifnum \value{bibgrouped}>0
+                \insertbiblioauthorgrouped    % Вывод всех работ автора, сгруппированных по источникам
+            \else
+                \insertbiblioauthor      % Вывод всех работ автора
+            \fi
+        \fi
+         % \insertbiblioauthorimportant  % Вывод наиболее значимых работ автора (определяется в файле characteristic во второй section)
+        \begin{refcontext}[labelprefix={}]
+            \insertbiblioexternal            % Вывод списка литературы, на которую ссылались в тексте автореферата
+        \end{refcontext}
+        % Невидимый библиографический список для подсчёта количества внешних публикаций
+        % Используется, чтобы убрать приставку "А" у работ автора, если в автореферате нет
+        % цитирований внешних источников.
+        \printbibliography[heading=nobibheading, section=0, env=countexternal, keyword=biblioexternal, resetnumbers=true]%
+    }
+}
+\ifdefmacro{\microtypesetup}{\microtypesetup{protrusion=true}}{}
+\urlstyle{tt}                               % возвращаем установки шрифта ссылок URL

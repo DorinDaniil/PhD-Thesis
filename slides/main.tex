@@ -1,0 +1,79 @@
+\documentclass[aspectratio=169]{beamer}
+
+\graphicspath{{figs}}
+
+\usepackage[T1,T2A]{fontenc}
+\usepackage[main=russian,english]{babel}
+
+\usepackage{svg}
+\usepackage{cmap}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta}
+\usepackage{array}
+\usepackage{cancel}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{csquotes}
+\usepackage{amssymb,amsfonts,amsmath}
+
+\usecolortheme{beaver}
+\usefonttheme[onlymath]{serif}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[page number]
+\setbeamertemplate{blocks}[rounded=true,shadow=true]
+\setbeamersize{text margin left=0.5cm,text margin right=0.5cm}
+\setbeamerfont{author}{size=\normalsize}
+\setbeamerfont{institute}{size=\normalsize}
+\setbeamerfont{date}{size=\normalsize}
+\setbeamertemplate{enumerate item}{\insertenumlabel)}
+\setbeamertemplate{enumerate subitem}{\insertenumlabel)}
+\setbeamertemplate{enumerate subsubitem}{\insertenumlabel)}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\title{Пространственно-временные характеристики в задаче декодирования мультимодальных многомерных временных рядов}
+\author{
+    Дорин Даниил Дмитриевич
+}
+\institute{
+    Диссертация на соискание ученой степени\\
+    кандидата физико-математических наук\\
+    1.2.1 --- Искусственный интеллект и машинное обучение\\
+    Научный руководитель: к.ф.-м.н. Грабовой~А.\,В.
+}
+\date{Москва --- \the\year}
+
+\begin{document}
+
+\begin{frame}
+    \thispagestyle{empty}
+    \maketitle
+\end{frame}
+
+%----------------------------------------------------------------------------------------------------------
+\begin{frame}{Задача декодирования мультимодальных временных рядов}
+    %% TODO: мотивация, три постановки (лаг, классификация, реконструкция), общая схема
+\end{frame}
+
+%----------------------------------------------------------------------------------------------------------
+\begin{frame}{Оценка гемодинамического лага}
+    %% TODO: линейная авторегрессионная модель, минимум MSE на зрительной коре
+\end{frame}
+
+%----------------------------------------------------------------------------------------------------------
+\begin{frame}{Пространственно-временная классификация фМРТ}
+    %% TODO: маски активности, риманова геометрия, сравнение с нейросетями
+\end{frame}
+
+%----------------------------------------------------------------------------------------------------------
+\begin{frame}{Мультимодальная реконструкция фМРТ--ЭЭГ}
+    %% TODO: контрастивное выравнивание с CLIP, двухстадийная генерация, CLIP-Score
+\end{frame}
+
+%----------------------------------------------------------------------------------------------------------
+\begin{frame}{Положения, выносимые на защиту}
+    %% TODO: из common/characteristic.tex
+\end{frame}
+
+\end{document}
