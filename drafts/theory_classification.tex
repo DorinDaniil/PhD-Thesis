@@ -1,0 +1,157 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper, mag=1000, left=2.5cm, right=1.5cm, top=2cm, bottom=2cm, headsep=0.7cm, footskip=1cm]{geometry}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Теорема}
+\newtheorem{lemma}{Лемма}
+\newtheorem{corollary}{Следствие}
+\theoremstyle{definition}
+\newtheorem{assumption}{Предположение}
+\newtheorem{remark}{Замечание}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbP}{\mathbb{P}}
+\newcommand{\bbE}{\mathbb{E}}
+
+\title{Гарантии пространственно-временной классификации многомерных временных рядов при ограниченном объеме выборки:\\ I. Отбор информативных компонент}
+\author{Д.\,Д.~Дорин, А.\,В.~Грабовой}
+\date{Рабочий черновик}
+
+\begin{document}
+\maketitle
+
+\section{Конвейер классификации и цель анализа}
+
+Рассматривается классификатор временных рядов
+\[
+\mathbf{h} = \boldsymbol{\eta} \circ \boldsymbol{\psi} \circ \mathcal{A},
+\qquad
+\boldsymbol{\psi}_y = \boldsymbol{\pi}_y \circ \mathbf{m}_y,
+\]
+в котором $\mathcal{A}$~--- пространственное сжатие, $\mathbf{m}_y$ отбирает $h$ компонент ряда по кросс-корреляции со стимулом класса~$y$ при лаге~$\Delta t$, $\boldsymbol{\pi}_y$ описывает динамику отобранных компонент ковариационной матрицей и проецирует ее на касательное пространство риманова многообразия $\mathbb{S}_{+}^{h}$ в точке риманова среднего, а $\boldsymbol{\eta}$~--- линейный классификатор в пространстве размерности $d = h(h+1)/2$.
+
+Цель работы~--- сквозная оценка риска классификатора $\mathbf{h}$, разложимая по этапам конвейера:
+(i)~гарантия отбора информативных компонент;
+(ii)~концентрация ковариационных оценок в геодезическом расстоянии;
+(iii)~устойчивость логарифмического отображения к ошибкам оценивания;
+(iv)~обобщающая способность линейного классификатора в касательном пространстве.
+Настоящая часть посвящена этапу~(i).
+
+\section{Модель наблюдений}
+
+Пусть $x_v(t)$~--- сигнал компоненты (вокселя) $v = 1, \ldots, V$ в момент $t$, а $\mathring{u}(t)$~--- центрированный индикаторный ряд стимуляции, известный по дизайну эксперимента. Для построения маски класса ряды всех $N_y$ объектов класса объединяются по времени, так что отбору доступно $\widetilde{T} = N_y \mathcal{T}$ отсчетов, где $\mathcal{T}$~--- длина одного ряда.
+
+Примем сигнальную модель
+\begin{equation}\label{eq:signal_model}
+x_v(t) = \beta_v\, \mathring{u}(t - \Delta t) + \varepsilon_v(t),
+\qquad v = 1, \ldots, V,
+\end{equation}
+с множеством активных компонент
+\[
+S = \{ v : |\beta_v| \ge \beta_{\min} \}, \qquad s = |S|,
+\qquad \beta_v = 0 \ \text{при} \ v \notin S.
+\]
+
+\begin{assumption}\label{as:subgauss}
+Случайные величины $\varepsilon_v(t)$ центрированы и субгауссовские с параметром $\sigma^2$: $\bbE \exp(\lambda \varepsilon_v(t)) \le \exp(\lambda^2 \sigma^2 / 2)$ для всех $\lambda \in \bbR$.
+\end{assumption}
+
+\begin{assumption}\label{as:time_indep}
+При фиксированном $v$ величины $\{\varepsilon_v(t)\}_t$ независимы.
+\end{assumption}
+
+\begin{assumption}\label{as:space_arbitrary}
+Зависимость шума между компонентами $v \ne w$ произвольна.
+\end{assumption}
+
+Предположение~\ref{as:space_arbitrary} существенно для приложений: пространственная коррелированность шума не ограничивается. Предположение~\ref{as:time_indep} ослабляется до $m$-зависимости или $\beta$-перемешивания стандартной блочной техникой; в результатах при этом $\widetilde{T}$ заменяется на $\widetilde{T}/\kappa$ с константой $\kappa$, зависящей от скорости убывания зависимости (см.~замечание~\ref{rem:mixing}).
+
+\section{Гарантия отбора информативных компонент}
+
+Отбор выполняется по выборочной кросс-корреляции при лаге $\Delta t$:
+\begin{equation}\label{eq:rho_hat}
+\widehat{\rho}_v = \frac{1}{\widetilde{T}} \sum_{t} \mathring{u}(t)\, x_v(t + \Delta t),
+\qquad
+\widehat{S}_h = \operatorname*{Top-}h \big( |\widehat{\rho}_1|, \ldots, |\widehat{\rho}_V| \big),
+\end{equation}
+где суммирование ведется по допустимым $t$ (краевые эффекты сдвига поглощаются определением $\widetilde{T}$). Обозначим энергию дизайна
+\[
+\sigma_u^2 = \frac{1}{\widetilde{T}} \sum_t \mathring{u}(t)^2 .
+\]
+
+Подстановка модели~\eqref{eq:signal_model} в~\eqref{eq:rho_hat} дает разложение
+\begin{equation}\label{eq:decomp}
+\widehat{\rho}_v = \beta_v \sigma_u^2 + \xi_v,
+\qquad
+\xi_v = \frac{1}{\widetilde{T}} \sum_t \mathring{u}(t)\, \varepsilon_v(t + \Delta t).
+\end{equation}
+
+\begin{lemma}\label{lem:noise}
+При выполнении предположений~\ref{as:subgauss} и~\ref{as:time_indep} величина $\xi_v$ субгауссовская с параметром $\sigma^2 \sigma_u^2 / \widetilde{T}$, и для любого $\delta \in (0,1)$
+\[
+\bbP\left( \max_{v \le V} |\xi_v| \ge s_* \right) \le \delta,
+\qquad
+s_* = \sigma \sigma_u \sqrt{\frac{2 \log (2V/\delta)}{\widetilde{T}}} .
+\]
+\end{lemma}
+
+\begin{proof}
+Величина $\xi_v$ есть линейная комбинация независимых субгауссовских величин с весами $a_t = \mathring{u}(t)/\widetilde{T}$, следовательно, субгауссовская с параметром $\sigma^2 \sum_t a_t^2 = \sigma^2 \sigma_u^2 / \widetilde{T}$. Хвостовая оценка $\bbP(|\xi_v| \ge s) \le 2 \exp(-\widetilde{T} s^2 / (2 \sigma^2 \sigma_u^2))$ и объединение по $v = 1, \ldots, V$ дают утверждение; независимость между компонентами не используется.
+\end{proof}
+
+\begin{theorem}[гарантия скрининга]\label{thm:screening}
+Пусть выполнены предположения~\ref{as:subgauss}--\ref{as:space_arbitrary}, $h \ge s$ и условие отделимости
+\begin{equation}\label{eq:separation}
+\beta_{\min} > \frac{2\sigma}{\sigma_u} \sqrt{\frac{2 \log (2V/\delta)}{\widetilde{T}}} .
+\end{equation}
+Тогда $\bbP\big( S \subseteq \widehat{S}_h \big) \ge 1 - \delta$.
+\end{theorem}
+
+\begin{proof}
+Работаем на событии $\max_v |\xi_v| < s_*$ из леммы~\ref{lem:noise}, вероятность которого не менее $1-\delta$. Для активной компоненты $v \in S$ из~\eqref{eq:decomp} следует $|\widehat{\rho}_v| \ge \beta_{\min} \sigma_u^2 - s_*$; для неактивной $w \notin S$~--- $|\widehat{\rho}_w| < s_*$. Условие~\eqref{eq:separation} равносильно $\beta_{\min}\sigma_u^2 - s_* > s_*$, поэтому каждая активная компонента строго превосходит по модулю каждую неактивную, и в упорядочивании по $|\widehat{\rho}_v|$ все элементы $S$ занимают первые $s$ позиций. При $h \ge s$ множество $\widehat{S}_h$ содержит $S$.
+\end{proof}
+
+\begin{corollary}[цена рассогласования лага]\label{cor:lag}
+Пусть отбор~\eqref{eq:rho_hat} выполняется при лаге $\delta' \ne \Delta t$. Тогда разложение~\eqref{eq:decomp} принимает вид $\widehat{\rho}_v = \beta_v\, c_u(\delta' - \Delta t) + \xi_v$, где
+\[
+c_u(\tau) = \frac{1}{\widetilde{T}} \sum_t \mathring{u}(t)\, \mathring{u}(t + \tau),
+\qquad |c_u(\tau)| \le \sigma_u^2,
+\]
+и утверждение теоремы~\ref{thm:screening} сохраняется при замене условия~\eqref{eq:separation} на
+\[
+\beta_{\min} > \frac{2\sigma \sigma_u}{|c_u(\delta' - \Delta t)|} \sqrt{\frac{2 \log (2V/\delta)}{\widetilde{T}}} .
+\]
+\end{corollary}
+
+Следствие~\ref{cor:lag} количественно описывает деградацию гарантии отбора при неточной оценке гемодинамического лага: требование к минимальной силе сигнала ужесточается в $\sigma_u^2 / |c_u(\delta' - \Delta t)|$ раз, причем для быстро декоррелирующих дизайнов стимуляции этот множитель растет тем быстрее, чем короче блоки стимуляции.
+
+\begin{remark}
+Число компонент $V$ входит в условие~\eqref{eq:separation} только логарифмически, что объясняет работоспособность отбора при $V$ порядка $10^5$ и умеренных $\widetilde{T}$.
+\end{remark}
+
+\begin{remark}
+Теорема~\ref{thm:screening} контролирует ложные исключения (полноту отбора), тогда как применяемая в конвейере проверка значимости ранговой корреляцией Кендалла с поправкой Холма контролирует ложные включения. Для рангового варианта статистики отбора аналог леммы~\ref{lem:noise} получается концентрацией U-статистик по Хёфдингу с изменением абсолютных констант.
+\end{remark}
+
+\begin{remark}\label{rem:mixing}
+При замене предположения~\ref{as:time_indep} на $m$-зависимость шума блочная техника (разбиение суммы в $\xi_v$ на $m$ прореженных подсумм) сохраняет лемму~\ref{lem:noise} с заменой $\widetilde{T}$ на $\widetilde{T}/m$; при $\beta$-перемешивании используется неравенство Бернштейна для перемешивающих последовательностей.
+\end{remark}
+
+\section{Концентрация ковариационных оценок в геодезическом расстоянии}
+
+Формулируется на следующем этапе работы: для отобранных $h$ компонент и ковариационной матрицы $\mathbf{R} \in \mathbb{S}_{+}^{h}$, оцененной по ряду длины $\mathcal{T}$, устанавливается оценка вида $\delta_{\mathcal{R}}(\widehat{\mathbf{R}}, \mathbf{R}) \lesssim \varkappa(\mathbf{R}) \sqrt{h/\mathcal{T}}$ с переносом спектральных неравенств концентрации в аффинно-инвариантную метрику.
+
+\section{Устойчивость касательного представления}
+
+Формулируется на следующем этапе работы: липшицевость отображения $(\overline{\mathbf{R}}, \mathbf{R}_i) \mapsto \operatorname{Log}_{\overline{\mathbf{R}}}(\mathbf{R}_i)$ по обоим аргументам с явными константами через теорию возмущений матричных функций.
+
+\section{Сквозная оценка риска и достаточный объем выборки}
+
+Формулируется на завершающем этапе работы: разложение избыточного риска классификатора $\mathbf{h}$ на вклады этапов (i)--(iv) и следствие о достаточных $(N, \mathcal{T}, h)$ для заданного уровня риска.
+
+\end{document}
