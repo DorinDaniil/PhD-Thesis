@@ -1,0 +1,91 @@
+\documentclass[tikz,border=3pt]{standalone}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath,amssymb}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{plane}{RGB}{250,226,207}
+\definecolor{planeedge}{RGB}{190,140,100}
+\definecolor{domeTop}{RGB}{232,242,247}
+\definecolor{domeBot}{RGB}{118,166,196}
+\definecolor{domeEdge}{RGB}{70,110,140}
+\definecolor{ring}{RGB}{35,70,100}
+\definecolor{geo}{RGB}{140,0,30}     % geodesic with maximal distortion (adjacent pair)
+\definecolor{geoB}{RGB}{0,120,70}    % geodesic through the mean (no distortion)
+\definecolor{chord}{RGB}{0,0,150}    % Euclidean distances in the tangent space
+\definecolor{logc}{RGB}{0,0,150}
+
+% Slide version: larger sphere and circle, labels enlarged; the mean sits clearly
+% above the ring so the geodesic over the top stays away from it.
+\begin{document}
+\begin{tikzpicture}[>=Stealth, font=\Large, line cap=round,
+    pt/.style={circle,fill=black,inner sep=1.5pt},
+    lab/.style={inner sep=1pt},
+    geol/.style={geo, dashed, line width=1.4pt},
+    geolB/.style={geoB, dashed, line width=1.4pt}]
+
+\def\rx{2.6}\def\ry{0.92}
+\def\ai{180}\def\ak{0}
+\def\ajp{205}   % j in the tangent plane
+\def\ajm{237}   % j on the manifold: c(rho) times farther along the circle
+
+% ================= tangent space (top)
+\coordinate (T) at (0,6.9);
+\fill[plane] (-4.7,5.35) -- (4.3,5.35) -- (5.4,8.25) -- (-3.6,8.25) -- cycle;
+\node[lab,anchor=north east] at (5.3,8.2) {$T_{\bar{\mathbf{R}}}$};
+\draw[planeedge, line width=0.8pt] (T) ellipse ({\rx} and {\ry});
+
+\coordinate (Pi) at ($(T)+({\rx*cos(\ai)},{\ry*sin(\ai)})$);
+\coordinate (Pj) at ($(T)+({\rx*cos(\ajp)},{\ry*sin(\ajp)})$);
+\coordinate (Pk) at ($(T)+({\rx*cos(\ak)},{\ry*sin(\ak)})$);
+\draw[chord, line width=1.3pt] (Pi) -- (Pk);
+\draw[chord, line width=1.3pt] (Pi) -- (Pj);
+\node[lab, text=chord, anchor=south] at ($(T)+(1.2,0.08)$) {$2\rho$};
+\node[lab, text=chord, anchor=east] at ($(Pi)!0.5!(Pj)+(-0.3,-0.02)$) {$\|\mathbf{p}_i-\mathbf{p}_j\|_2$};
+
+\node[pt] at (T)  {}; \node[lab, above=3pt] at (T) {$\bar{\mathbf{R}}$};
+\node[pt] at (Pi) {}; \node[lab, above left=4pt] at (Pi) {$\mathbf{p}_i$};
+\node[pt] at (Pj) {}; \node[lab, anchor=north] at ($(Pj)+(0.12,-0.22)$) {$\mathbf{p}_j$};
+\node[pt] at (Pk) {}; \node[lab, right=3pt] at (Pk) {$\mathbf{p}_k = -\mathbf{p}_i$};
+
+% ================= Log map: manifold -> tangent space
+\draw[logc, ->, line width=2pt] (0,4.05) -- (0,5.22);
+\node[lab, text=logc, anchor=west] at (0.18,4.63) {$\mathrm{Log}_{\bar{\mathbf{R}}}$};
+
+% ================= manifold: hemisphere (bottom)
+\def\bx{4.0}\def\by{0.95}\def\hh{3.9}
+\shade[top color=domeTop, bottom color=domeBot]
+    (-\bx,0) arc[start angle=180, end angle=0, x radius=\bx, y radius=\hh]
+    arc[start angle=0, end angle=-180, x radius=\bx, y radius=\by] -- cycle;
+\draw[domeEdge, densely dotted, thin] (-\bx,0) arc[start angle=180, end angle=0, x radius=\bx, y radius=\by];
+\draw[domeEdge, line width=0.8pt] (-\bx,0) arc[start angle=180, end angle=360, x radius=\bx, y radius=\by];
+\draw[domeEdge, line width=0.8pt] (-\bx,0) arc[start angle=180, end angle=0, x radius=\bx, y radius=\hh];
+\node[lab, anchor=north east, text=black] at (3.9,-0.6) {$\mathcal{R}$};
+
+% circle of radius rho around the mean; the mean sits above the ring, near the top of the dome
+\coordinate (M)  at (0,1.85);
+\coordinate (Mb) at (0,3.2);
+\coordinate (Ri) at ($(M)+({\rx*cos(\ai)},{\ry*sin(\ai)})$);
+\coordinate (Rj) at ($(M)+({\rx*cos(\ajm)},{\ry*sin(\ajm)})$);
+\coordinate (Rk) at ($(M)+({\rx*cos(\ak)},{\ry*sin(\ak)})$);
+% ring without the arc R_i -> R_j (that piece is drawn as the geodesic)
+\draw[ring, line width=0.9pt] (Rj) arc[start angle=\ajm, end angle=540, x radius=\rx, y radius=\ry];
+
+% antipodal pair: geodesic over the top through the mean, length 2 rho (no distortion)
+\draw[geolB] (Ri) .. controls ($(Ri)+(0.1,1.05)$) and ($(Mb)+(-1.35,0)$) .. (Mb)
+                  .. controls ($(Mb)+(1.35,0)$) and ($(Rk)+(-0.1,1.05)$) .. (Rk);
+\node[lab, text=geoB, anchor=north] at ($(M)+(0,0.55)$) {$\delta_{\mathcal{R}}(\mathbf{R}_i,\mathbf{R}_k)=2\rho$};
+
+% adjacent pair (extremal case): geodesic along the surface, c(rho) times the chord
+\draw[geol] (Ri) .. controls ($(Ri)!0.3!(Rj)+(-0.34,-0.26)$) and ($(Ri)!0.7!(Rj)+(-0.32,-0.32)$) .. (Rj);
+\node[lab, text=geo, anchor=north] at (0.4,0.45)
+    {$\delta_{\mathcal{R}}(\mathbf{R}_i,\mathbf{R}_j) = c(\rho)\,\|\mathbf{p}_i-\mathbf{p}_j\|_2$};
+
+\node[pt] at (Mb) {}; \node[lab, above=3pt] at (Mb) {$\bar{\mathbf{R}}$};
+\node[pt] at (Ri) {}; \node[lab, left=3pt] at (Ri) {$\mathbf{R}_i$};
+\node[pt] at (Rj) {}; \node[lab, anchor=north] at ($(Rj)+(0,-0.16)$) {$\mathbf{R}_j$};
+\node[pt] at (Rk) {}; \node[lab, right=3pt] at (Rk) {$\mathbf{R}_k$};
+
+\end{tikzpicture}
+\end{document}
