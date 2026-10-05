@@ -228,20 +228,6 @@ sorting=none,% настройка сортировки списка литера
             \perdatasource{registered.bib}
             \step[fieldset=keywords, fieldvalue={,biblioregistered},append=true]
         }
-        % Те же ключевые слова для версий biblatex, в которых \perdatasource сравнивается
-        % с полным путем из \addbibresource, а не с именем файла
-        \map[overwrite]{
-            \perdatasource{biblio/external.bib}
-            \step[fieldset=keywords, fieldvalue={,biblioexternal},append=true]
-        }
-        \map[overwrite]{
-            \perdatasource{biblio/author.bib}
-            \step[fieldset=keywords, fieldvalue={,biblioauthor},append=true]
-        }
-        \map[overwrite]{
-            \perdatasource{biblio/registered.bib}
-            \step[fieldset=keywords, fieldvalue={,biblioregistered},append=true]
-        }
         \map[overwrite]{ % добавляем ключевые слова, чтобы различать источники
             \step[fieldset=keywords, fieldvalue={,bibliofull},append=true]
         }
