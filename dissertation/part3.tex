@@ -62,7 +62,7 @@
 Если область мозга реагирует на стимул, функция кросс-корреляции между вокселями в этой области и временным рядом стимулов достигает пика при гемодинамическом лаге~$\Delta t$. Этот пик указывает на сильную корреляцию между нейронной активностью и стимулом.
 \end{assumption}
 
-Предположение~\ref{as:cls_delay} опирается на результат главы~\ref{ch:delay}: гипотеза о наличии гемодинамического лага между предъявлением стимула и BOLD-откликом не была отвергнута~--- ошибка прогноза фМРТ-отклика существенно зависит от лага и на зрительной зоне имеет выраженный минимум, как показано в разделе~\ref{sec4:delay_dt} на рис.~\ref{fig:mse_dt}. В настоящую главу переносится сам факт этого влияния, а не конкретное значение лага: $\Delta t$ выступает индивидуальным для пациента параметром Алгоритма~\ref{alg:bad}, и кросс-корреляция~\eqref{eq:cls_corr} вычисляется со сдвигом именно на этот лаг.
+Предположение~\ref{as:cls_delay} опирается на результат главы~\ref{ch:delay}: гипотеза о наличии гемодинамического лага между предъявлением стимула и BOLD-откликом не была отвергнута~--- ошибка прогноза фМРТ-отклика существенно зависит от лага и на зрительной зоне имеет выраженный минимум, как показано в разделе~\ref{sec4:delay_dt} на рис.~\ref{fig:mse_dt}. Этот минимум наблюдается лишь в зрительной зоне, что и мотивирует отбор вокселей по корреляции со стимулом. В настоящую главу переносится сам факт этого влияния, а не конкретное значение лага: $\Delta t$ выступает индивидуальным для пациента параметром Алгоритма~\ref{alg:bad}, и кросс-корреляция~\eqref{eq:cls_corr} вычисляется со сдвигом именно на этот лаг.
 
 Алгоритм~\ref{alg:bad} принимает временной ряд фМРТ и бинарный ряд стимулов и имеет три настраиваемых параметра: размер ядра $k_s$, гемодинамический лаг $\Delta t$ и количество активных областей $h$. Частота сканирования $\mu$ используется для перевода лага в число отсчетов, что обеспечивает точный учет временной динамики гемодинамического отклика.
 
@@ -129,9 +129,8 @@
 \boldsymbol{\psi} = \boldsymbol{\psi}_1 \oplus \cdots \oplus \boldsymbol{\psi}_L, \qquad \boldsymbol{\psi}_y = \boldsymbol{\pi}_y \circ \mathbf{m}_y, \qquad d = \sum_{y=1}^{L} d_y,
 \end{equation}
 где $\mathbf{m}_y$ применяет маску $\mathcal{M}^{y}$ в смысле Определения~\ref{def:cls_masking} и отбирает $h_y$ активных вокселей, формируя матрицу из $\mathbb{R}^{h_y \times \mathcal{T}}$, а $\boldsymbol{\pi}_y$ проецирует ее на касательное пространство риманова многообразия с последующей векторизацией. Размерность определяется в разделе~\ref{sec3:cls_tsm}:
-\begin{equation}\label{eq:cls_dim}
-d_y = \frac{h_y(h_y+1)}{2}.
-\end{equation}
+\begin{equation*}d_y = \frac{h_y(h_y+1)}{2}.
+\end{equation*}
 Основным компонентом модели является кодировщик $\boldsymbol{\psi}$, который транслирует временные ряды в евклидово пространство, проецируя их на касательное пространство риманова многообразия, которое само по себе является евклидовым. Это преобразование упрощает последующую задачу классификации, эффективно извлекая пространственно-временные характеристики, демонстрирующие степень соответствия между объектом и маской активности конкретного класса. В результате выбор классификатора становится простым, и в данной работе в качестве $\boldsymbol{\eta}$ рассматриваются логистическая регрессия и двухслойный перцептрон.
 
 \subsection{Проекция на касательное пространство риманова многообразия}\label{sec3:cls_tsm}
@@ -173,9 +172,8 @@ y^{i}_{h1} & y^{i}_{h2} & \ldots & y^{i}_{h\mathcal{T}}
 \mathbf{P}_i = \operatorname{Log}_{\bar{\mathbf{R}}}(\mathbf{R}_i) = \bar{\mathbf{R}}^{1/2} \log\!\big( \bar{\mathbf{R}}^{-1/2} \mathbf{R}_i \bar{\mathbf{R}}^{-1/2} \big) \bar{\mathbf{R}}^{1/2}, \qquad \mathbf{P}_i \in \mathbb{R}^{h \times h},
 \end{equation}
 а обратное отображение с касательного пространства на многообразие~--- экспоненциальным:
-\begin{equation}\label{eq:cls_exp}
-\operatorname{Exp}_{\bar{\mathbf{R}}}(\mathbf{P}_i) = \mathbf{R}_i = \bar{\mathbf{R}}^{1/2} \exp\!\big( \bar{\mathbf{R}}^{-1/2} \mathbf{P}_i \bar{\mathbf{R}}^{-1/2} \big) \bar{\mathbf{R}}^{1/2}.
-\end{equation}
+\begin{equation*}\operatorname{Exp}_{\bar{\mathbf{R}}}(\mathbf{P}_i) = \mathbf{R}_i = \bar{\mathbf{R}}^{1/2} \exp\!\big( \bar{\mathbf{R}}^{-1/2} \mathbf{P}_i \bar{\mathbf{R}}^{-1/2} \big) \bar{\mathbf{R}}^{1/2}.
+\end{equation*}
 Эти операции вычисляются через спектральное разложение матриц. Для матрицы $\mathbf{Q} = \mathbf{U} \mathbf{D} \mathbf{U}^{-1}$, где $\mathbf{D}$~--- диагональная матрица собственных значений, а $\mathbf{U}$~--- матрица собственных векторов,
 \begin{equation}\label{eq:cls_matfun}
 \mathbf{Q}^{\pm 1/2} = \mathbf{U} \mathbf{D}^{\pm 1/2} \mathbf{U}^{-1}, \qquad \log(\mathbf{Q}) = \mathbf{U} \log(\mathbf{D}) \mathbf{U}^{-1}, \qquad \exp(\mathbf{Q}) = \mathbf{U} \exp(\mathbf{D}) \mathbf{U}^{-1}.
@@ -223,9 +221,8 @@ S_{11} & \sqrt{2}\, S_{12} & \ldots & \sqrt{2}\, S_{1h} & S_{22} & \sqrt{2}\, S_
 \end{definition}
 
 Пусть задана полная запись $\mathbf{S}_{\mathrm{rec}} = [\mathbf{F}(1), \ldots, \mathbf{F}(\mathcal{T}_{\mathrm{rec}})]$ длиной $\mathcal{T}_{\mathrm{rec}}$ и категориальный ряд стимулов
-\begin{equation}\label{eq:cls_stimseq}
-	\mathbf{u}_{\mathrm{rec}} = [u_{\mathrm{rec}}(1), \ldots, u_{\mathrm{rec}}(\mathcal{T}_{\mathrm{rec}})], \quad u_{\mathrm{rec}}(t) \in \{0, 1, \dots, L\},
-\end{equation}
+\begin{equation*}\mathbf{u}_{\mathrm{rec}} = [u_{\mathrm{rec}}(1), \ldots, u_{\mathrm{rec}}(\mathcal{T}_{\mathrm{rec}})], \quad u_{\mathrm{rec}}(t) \in \{0, 1, \dots, L\},
+\end{equation*}
 где класс $0$ обозначает периоды отдыха пациента. Цель~--- сегментировать запись на интервалы фиксированной длины $\mathcal{T}$ так, чтобы каждый сегмент преимущественно содержал одну категорию стимулов.
 
 \begin{assumption}\label{as:cls_rest}
@@ -265,9 +262,8 @@ r_1 = \lfloor (\mathcal{T} - \mathcal{T}_{j})/2 \rfloor, \quad r_2 = \lceil (\ma
 
 \begin{lemma}\label{lem:cls_inv}
 Для любой обратимой матрицы $\mathbf{A} \in \mathbb{R}^{h \times h}$ и любых $\mathbf{R}_1, \mathbf{R}_2 \in \mathbb{S}_{+}^{h}$
-\begin{equation}\label{eq:cls_inv}
-\delta_{\mathcal{R}}\big(\mathbf{A}\mathbf{R}_1\mathbf{A}^{\top}, \mathbf{A}\mathbf{R}_2\mathbf{A}^{\top}\big) = \delta_{\mathcal{R}}(\mathbf{R}_1, \mathbf{R}_2).
-\end{equation}
+\begin{equation*}\delta_{\mathcal{R}}\big(\mathbf{A}\mathbf{R}_1\mathbf{A}^{\top}, \mathbf{A}\mathbf{R}_2\mathbf{A}^{\top}\big) = \delta_{\mathcal{R}}(\mathbf{R}_1, \mathbf{R}_2).
+\end{equation*}
 \end{lemma}
 \begin{proof}
 Расстояние зависит только от собственных значений матрицы $\mathbf{R}_1^{-1}\mathbf{R}_2$. Матрица $(\mathbf{A}\mathbf{R}_1\mathbf{A}^{\top})^{-1}\mathbf{A}\mathbf{R}_2\mathbf{A}^{\top} = \mathbf{A}^{-\top}\mathbf{R}_1^{-1}\mathbf{R}_2\mathbf{A}^{\top}$ подобна $\mathbf{R}_1^{-1}\mathbf{R}_2$, а подобные матрицы имеют одинаковые собственные значения.
@@ -288,11 +284,10 @@ r_1 = \lfloor (\mathcal{T} - \mathcal{T}_{j})/2 \rfloor, \quad r_2 = \lceil (\ma
 
 \begin{lemma}\label{lem:cls_vec}
 Отображение $\operatorname{vec}_{\sqrt{2}}$ является линейной изометрией пространств $(\mathrm{Sym}(h), \|\cdot\|_F)$ и $(\mathbb{R}^{d}, \|\cdot\|_2)$. Как следствие,
-\begin{equation}\label{eq:cls_vec_iso}
-\|\mathbf{p}_i\|_2 = \|\mathbf{P}_i\|_{\bar{\mathbf{R}}},
+\begin{equation*}\|\mathbf{p}_i\|_2 = \|\mathbf{P}_i\|_{\bar{\mathbf{R}}},
 \qquad
 \|\mathbf{p}_i - \mathbf{p}_j\|_2 = \|\mathbf{P}_i - \mathbf{P}_j\|_{\bar{\mathbf{R}}} .
-\end{equation}
+\end{equation*}
 \end{lemma}
 \begin{proof}
 Для симметричной $\mathbf{S}$ каждый внедиагональный элемент входит в норму Фробениуса дважды:
@@ -476,9 +471,8 @@ L(\sigma) = \int \big\| d\exp_{\gamma(t)}[\dot{\gamma}(t)] \big\|_{\sigma(t)} dt
 
 \begin{proposition}[{\cite[следствие~5.35]{vershynin2012introduction}}]\label{prop:cls_vershynin}
 Пусть $\mathbf{G} \in \mathbb{R}^{n \times k}$, $n \geqslant k$, имеет независимые элементы с распределением $\mathcal{N}(0,1)$. Тогда для любого $u \geqslant 0$ с вероятностью не меньше $1 - 2e^{-u^2/2}$
-\begin{equation}\label{eq:cls_vershynin}
-\sqrt{n} - \sqrt{k} - u \leqslant s_{\min}(\mathbf{G}) \leqslant s_{\max}(\mathbf{G}) \leqslant \sqrt{n} + \sqrt{k} + u ,
-\end{equation}
+\begin{equation*}\sqrt{n} - \sqrt{k} - u \leqslant s_{\min}(\mathbf{G}) \leqslant s_{\max}(\mathbf{G}) \leqslant \sqrt{n} + \sqrt{k} + u ,
+\end{equation*}
 где $s_{\min}$ и $s_{\max}$~--- наименьшее и наибольшее сингулярные числа.
 \end{proposition}
 

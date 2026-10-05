@@ -151,17 +151,20 @@
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}{Сохранение расстояний и устойчивость проекции}
 \begin{columns}[c]
-\begin{column}{0.48\textwidth}
+\begin{column}{0.56\textwidth}
 \justifying
 \small
 \shead{Теорема 1 (Дорин, 2026)}
-Пусть $\delta_{\mathcal{R}}(\bar{\mathbf{R}}, \mathbf{R}_i) \leqslant \rho$ для всех $i$. Тогда норма признака равна геодезическому расстоянию до среднего, $\|\mathbf{p}_i\|_2 = \delta_{\mathcal{R}}(\bar{\mathbf{R}}, \mathbf{R}_i)$, а расстояния между признаками искажаются не более чем в $c(\rho) = \sinh(\rho/\sqrt{2})\big/(\rho/\sqrt{2})$ раз:
+Пусть $\omega(\mathbf{S}_i) \leqslant \omega$ для всех $i$, где $\omega(\mathbf{S}) = \lambda_{\max}(\mathbf{S}) - \lambda_{\min}(\mathbf{S})$~--- спектральный разброс касательного вектора объекта. Тогда $\|\mathbf{p}_i\|_2 = \delta_{\mathcal{R}}(\bar{\mathbf{R}}, \mathbf{R}_i)$, а расстояния между признаками искажаются не более чем в $g(\omega) = \sinh(\omega/2)\big/(\omega/2)$ раз:
 \vspace{-0.3em}
 \[
 \|\mathbf{p}_i - \mathbf{p}_j\|_2
 \leqslant \delta_{\mathcal{R}}(\mathbf{R}_i, \mathbf{R}_j)
-\leqslant c(\rho)\,\|\mathbf{p}_i - \mathbf{p}_j\|_2 .
+\leqslant g(\omega)\,\|\mathbf{p}_i - \mathbf{p}_j\|_2 .
 \]
+\vspace{-0.9em}
+
+При радиусе облака $\rho$ выполнено $\omega \leqslant \sqrt{2}\rho$ и $c(\rho) = g(\sqrt{2}\rho)$; константа неулучшаема.
 
 \shead{Теорема 2 (Дорин, 2026)}
 Пусть $\hat{\mathbf{R}}$ выборочная ковариация по $\mathcal{T}$ гауссовским сканам с ковариацией $\mathbf{R} \in \mathbb{S}_{+}^{h}$. Тогда распределение $\delta_{\mathcal{R}}(\hat{\mathbf{R}}, \mathbf{R})$ не зависит от $\mathbf{R}$, и при $\varepsilon = \sqrt{h/\mathcal{T}} + t < 1$ с вероятностью не меньше $1 - 2e^{-\mathcal{T}t^2/2}$
@@ -171,7 +174,7 @@
 \;=\; O\big(h/\sqrt{\mathcal{T}}\big).
 \]
 \end{column}
-\begin{column}{0.52\textwidth}
+\begin{column}{0.44\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/Figure_4.pdf}
 \end{column}
