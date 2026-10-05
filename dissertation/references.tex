@@ -18,6 +18,12 @@
 \clearpage
 \insertbiblioexternal
 
+% Невидимый список для подсчета общего числа источников: счетчик citenum
+% используется во введении в абзаце «Объем и структура работы»
+\ifnumequal{\value{draft}}{0}{%
+    \printbibliography[heading=nobibheading, section=0, env=counter, keyword=bibliofull]%
+}{}
+
 \ifdefmacro{\microtypesetup}{\microtypesetup{protrusion=true}}{}
 \urlstyle{tt}                               % возвращаем установки шрифта ссылок URL
 %\hypersetup{ urlcolor={urlcolor} }          % Восстанавливаем цвет ссылок
