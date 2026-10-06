@@ -18,10 +18,10 @@
 \clearpage
 \insertbiblioexternal
 
-% Невидимый список для подсчета общего числа источников: счетчик citenum
+% Невидимый список для подсчета числа источников в «Списке литературы» (без работ автора): счетчик citenum
 % используется во введении в абзаце «Объем и структура работы»
 \ifnumequal{\value{draft}}{0}{%
-    \printbibliography[heading=nobibheading, section=0, env=counter, keyword=bibliofull]%
+    \printbibliography[heading=nobibheading, section=0, env=counter, keyword=biblioexternal]%
 }{}
 
 \ifdefmacro{\microtypesetup}{\microtypesetup{protrusion=true}}{}

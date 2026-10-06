@@ -215,6 +215,9 @@
 % возможно, актуальна только для biblatex
 %\newcommand{\citeinsynopsis}[1]{\ifsynopsis\else ~\cite{#1} \fi}
 
+%%% Ссылка, которая в автореферате сокращена до первых источников: \citesyn{ключи для автореферата}{остальные ключи}
+\newcommand{\citesyn}[2]{\ifsynopsis\cite{#1}\else\cite{#1, #2}\fi}
+
 % если текущий процесс запущен библиотекой tikz-external, то прекомпиляция должна быть включена
 \ifdefined\tikzexternalrealjob
     \setcounter{imgprecompile}{1}
