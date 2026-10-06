@@ -52,8 +52,8 @@
 % Светлая заливка лучшей строки таблицы тем же акцентом.
 \newcommand{\bestrow}{\rowcolor{accent!12}}
 
-\title[Пространственно-временные характеристики]{Пространственно-временные характеристики в задаче
-декодирования мультимодальных многомерных временных рядов}
+\title[Пространственно-временные методы декодирования]{Пространственно-временные методы декодирования
+мультимодальных многомерных временных рядов}
 \author[Д.\,Д.~Дорин]{Даниил Дмитриевич Дорин}
 \institute{Диссертация на соискание ученой степени\\
 кандидата физико-математических наук\\[2pt]
@@ -68,7 +68,7 @@
 \maketitle
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
-\begin{frame}[t]{\large Пространственно-временные характеристики в задаче декодирования мультимодальных многомерных временных рядов}
+\begin{frame}[t]{\large Пространственно-временные методы декодирования мультимодальных многомерных временных рядов}
 \justifying
 Исследуется задача декодирования: сигнал задан измерениями, реакция порождена внешним воздействием, требуется восстановить воздействие по измерениям. Выборка \textcolor{sblue}{ограничена}, а отклик \textcolor{cspace}{избыточен по пространству} и \textcolor{ctime}{запаздывает во времени} относительно воздействия.
 
@@ -152,20 +152,17 @@
 %----------------------------------------------------------------------------------------------------------
 \begin{frame}{Сохранение расстояний и устойчивость проекции}
 \begin{columns}[c]
-\begin{column}{0.56\textwidth}
+\begin{column}{0.48\textwidth}
 \justifying
 \small
 \shead{Теорема 1 (Дорин, 2026)}
-Пусть $\omega(\mathbf{S}_i) \leqslant \omega$ для всех $i$, где $\omega(\mathbf{S}) = \lambda_{\max}(\mathbf{S}) - \lambda_{\min}(\mathbf{S})$~--- спектральный разброс касательного вектора объекта. Тогда $\|\mathbf{p}_i\|_2 = \delta_{\mathcal{R}}(\bar{\mathbf{R}}, \mathbf{R}_i)$, а расстояния между признаками искажаются не более чем в $g(\omega) = \sinh(\omega/2)\big/(\omega/2)$ раз:
+Пусть $\delta_{\mathcal{R}}(\bar{\mathbf{R}}, \mathbf{R}_i) \leqslant \rho$ для всех $i$. Тогда норма признака равна геодезическому расстоянию до среднего, $\|\mathbf{p}_i\|_2 = \delta_{\mathcal{R}}(\bar{\mathbf{R}}, \mathbf{R}_i)$, а расстояния между признаками искажаются не более чем в $c(\rho) = \sinh(\rho/\sqrt{2})\big/(\rho/\sqrt{2})$ раз, и эта константа неулучшаема:
 \vspace{-0.3em}
 \[
 \|\mathbf{p}_i - \mathbf{p}_j\|_2
 \leqslant \delta_{\mathcal{R}}(\mathbf{R}_i, \mathbf{R}_j)
-\leqslant g(\omega)\,\|\mathbf{p}_i - \mathbf{p}_j\|_2 .
+\leqslant c(\rho)\,\|\mathbf{p}_i - \mathbf{p}_j\|_2 .
 \]
-\vspace{-0.9em}
-
-При радиусе облака $\rho$ выполнено $\omega \leqslant \sqrt{2}\rho$ и $c(\rho) = g(\sqrt{2}\rho)$; константа неулучшаема.
 
 \shead{Теорема 2 (Дорин, 2026)}
 Пусть $\hat{\mathbf{R}}$ выборочная ковариация по $\mathcal{T}$ гауссовским сканам с ковариацией $\mathbf{R} \in \mathbb{S}_{+}^{h}$. Тогда распределение $\delta_{\mathcal{R}}(\hat{\mathbf{R}}, \mathbf{R})$ не зависит от $\mathbf{R}$, и при $\varepsilon = \sqrt{h/\mathcal{T}} + t < 1$ с вероятностью не меньше $1 - 2e^{-\mathcal{T}t^2/2}$
@@ -175,7 +172,7 @@
 \;=\; O\big(h/\sqrt{\mathcal{T}}\big).
 \]
 \end{column}
-\begin{column}{0.44\textwidth}
+\begin{column}{0.52\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/Figure_4.pdf}
 \end{column}
@@ -337,12 +334,13 @@
 Эмбеддинги CLIP обучены на парах изображение и текст, поэтому хранят семантику сцены и почти не хранят текстуры и пиксельные детали. Метод восстанавливает содержание стимула, а не его точный вид.
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
-\begin{frame}{Результаты, выносимые на защиту}
+\begin{frame}{Положения, выносимые на защиту}
 \begin{enumerate}
 \justifying
-    \item Построен метод восстановления показаний фМРТ по видеоряду, просматриваемому человеком, с учетом гемодинамического лага; лаг оценивается по минимуму ошибки прогноза на зрительной коре.
-    \item Разработан метод классификации временных рядов фМРТ в условиях ограниченного объема выборки на основе масок активности и проекции ковариационных матриц на касательное пространство. Доказаны изометрические свойства признаков и их устойчивость к шуму оценки ковариаций.
-    \item Предложен метод реконструкции изображений по совместным сигналам фМРТ--ЭЭГ с контрастивным выравниванием представлений и диффузионной генерацией; показано превосходство мультимодальной модели над одномодальными.
+    \item Линейная авторегрессионная модель прогнозирования фМРТ-отклика по предъявленному стимулу и метод оценки гемодинамического лага BOLD-сигнала на ее основе.
+    \item Метод классификации временных рядов фМРТ на основе масок активности классов и проекции ковариационных матриц на касательное пространство риманова многообразия, устойчивый в условиях ограниченного объема выборки одного пациента.
+    \item Теоретические свойства проекции ковариационных матриц на касательное пространство в точке риманова среднего: инвариантность признаков к невырожденному преобразованию каналов, двусторонняя оценка искажения расстояний с неулучшаемой константой и оценка ошибки оценки ковариации по длине ряда.
+    \item Мультимодальная архитектура реконструкции стимула по одновременным сигналам фМРТ и ЭЭГ с контрастивным выравниванием совместных представлений и двухстадийной диффузионной генерацией.
 \end{enumerate}
 \end{frame}
 %----------------------------------------------------------------------------------------------------------
@@ -351,9 +349,9 @@
 \begin{enumerate}
 \footnotesize
 \justifying
-    \item \textit{\textbf{Dorin D}. et al.} Forecasting fMRI Images From Video Sequences: Linear Model Analysis // Health Information Science and Systems.~--- 2024.
-    \item \textit{\textbf{Dorin D.} et al.} Enhancing fMRI Data Decoding with Spatiotemporal Characteristics in Limited Dataset // Doklady Mathematics.~--- 2025.
-    \item \textit{\textbf{Dorin D.} et al.} Decoding Visual Information from Neural Signals: Image Reconstruction Based on Joint fMRI and EEG Analysis // Informatika i ee Primeneniya.~--- 2026.
+    \item \textit{\textbf{Dorin D.}, Kiselev N., Grabovoy A., Strijov V.} Forecasting fMRI Images From Video Sequences: Linear Model Analysis // Health Information Science and Systems.~--- 2024.
+    \item \textit{\textbf{Dorin D.}, Grabovoy A., Strijov V.} Enhancing fMRI Data Decoding with Spatiotemporal Characteristics in Limited Dataset // Doklady Mathematics.~--- 2025.
+    \item \textit{\textbf{Dorin D.}, Kiselev N., Grabovoy A.} Decoding Visual Information from Neural Signals: Image Reconstruction Based on Joint fMRI and EEG Analysis // Informatika i ee Primeneniya.~--- 2026.
 \end{enumerate}
 \shead{Доклады на международных и всероссийских конференциях}
 \begin{enumerate}

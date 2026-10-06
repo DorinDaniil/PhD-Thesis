@@ -235,3 +235,8 @@ __marimo__/
 *.dvi
 *.xdv
 *.bak
+
+# Compiled documents: build locally or on Overleaf, do not commit
+dissertation/main.pdf
+synopsis/main.pdf
+slides/main_predefense.pdf
