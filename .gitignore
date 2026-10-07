@@ -243,3 +243,6 @@ slides/main_predefense.pdf
 
 # Personal signature: the repository is public, upload it to Overleaf only
 images/personal-signature.pdf
+
+# Compiled copies at the repository root (uploaded by hand): never track them
+/*.pdf

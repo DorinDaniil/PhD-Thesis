@@ -215,8 +215,8 @@
 % возможно, актуальна только для biblatex
 %\newcommand{\citeinsynopsis}[1]{\ifsynopsis\else ~\cite{#1} \fi}
 
-%%% Ссылка, которая в автореферате сокращена до первых источников: \citesyn{ключи для автореферата}{остальные ключи}
-\newcommand{\citesyn}[2]{\ifsynopsis\cite{#1}\else\cite{#1, #2}\fi}
+%%% Ссылка на чужие работы: печатается только в диссертации, в автореферате опускается вместе с пробелом перед ней
+\newcommand{\extcite}[1]{\ifsynopsis\else~\cite{#1}\fi}
 
 % если текущий процесс запущен библиотекой tikz-external, то прекомпиляция должна быть включена
 \ifdefined\tikzexternalrealjob
