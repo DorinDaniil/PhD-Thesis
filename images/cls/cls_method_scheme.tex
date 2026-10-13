@@ -1,0 +1,114 @@
+% Схема модели классификации для одного объекта (Рисунок 3.2 диссертации и рисунок в автореферате).
+% Собирается отдельно из этой папки: pdflatex cls_method_scheme.tex -> cls_method_scheme.pdf
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath,amssymb}
+\usetikzlibrary{arrows.meta,calc}
+
+% цвета строк: класс 1 (сиреневый), класс 2 (зеленый), класс L (оранжевый)
+\definecolor{lav}{RGB}{184,184,228}  \definecolor{lavd}{RGB}{122,122,205}  \definecolor{wave1}{RGB}{41,41,143}
+\definecolor{grn}{RGB}{166,215,166}  \definecolor{grnd}{RGB}{89,180,89}    \definecolor{wave2}{RGB}{0,112,0}
+\definecolor{org}{RGB}{232,186,140}  \definecolor{orgd}{RGB}{214,133,51}   \definecolor{wave3}{RGB}{163,82,0}
+\definecolor{gridbg}{RGB}{237,237,237}
+\definecolor{framefill}{RGB}{240,240,240}
+\definecolor{frameline}{RGB}{115,115,115}
+\definecolor{boxline}{RGB}{140,140,140}
+\definecolor{arrowc}{RGB}{89,89,89}
+\definecolor{hdr}{RGB}{51,51,179}
+\definecolor{logc}{RGB}{0,0,220}
+\definecolor{dots}{RGB}{102,102,102}
+
+\begin{document}
+\begin{tikzpicture}[x=1pt, y=-1pt, font=\footnotesize,
+  >={Triangle[length=2.6pt,width=2.6pt]},
+  arr/.style={->, arrowc, line width=0.8pt},
+  hdr/.style={text=hdr, align=center, inner sep=0pt, anchor=north},
+  lbl/.style={inner sep=0pt, font=\scriptsize},
+  onarr/.style={inner sep=1pt, fill=white, font=\scriptsize},
+]
+
+% ---------- заголовки столбцов ----------
+\node[hdr] at (26.5,6)  {объект\\[-1pt]$\mathbf{S}$};
+\node[hdr] at (80.2,5)  {маски $\mathcal{M}^{y}$\\[-1pt]{\scriptsize корреляция, лаг $\Delta t$}};
+\node[hdr] at (132.8,6) {ряды\\[-1pt]$\mathbf{Y}_{y}$};
+\node[hdr] at (185.1,6) {ковариации\\[-1pt]$\mathbf{R}_{y}$};
+\node[hdr] at (233.4,6) {признаки\\[-1pt]$\mathbf{p}_{y}$};
+\node[hdr] at (274.5,6) {признак\\[-1pt]$\mathbf{p}$};
+\node[hdr] at (311.4,6) {класс\\[-1pt]$\hat{y}$};
+
+% ---------- объект: стопка сканов ----------
+\foreach \dx in {5.6, 2.8, 0} {
+  \fill[framefill, draw=frameline, line width=0.4pt] (7.9+\dx, 105.2-\dx) rectangle (33.4+\dx, 74.1-\dx);
+}
+\node[inner sep=0pt] at (20.65,89.7) {$\mathbf{F}(t)$};
+\node[lbl, anchor=north] at (24,109) {$\mathcal{T}$ отсчетов};
+
+% ---------- строки: y-координаты верха клеток ----------
+% row/ytop(маска, ковариация)/ytop(ряды, признаки)/цвета/метка
+\foreach \r/\yt/\yb/\cm/\cw/\cc/\cd/\lab in {
+  1/35.8/35.4/lav/wave1/lav/lavd/1,
+  2/75.5/75.1/grn/wave2/grn/grnd/2,
+  3/120.8/120.4/org/wave3/org/orgd/L} {
+  % --- маска активности: сетка 4x4 ---
+  \fill[gridbg] (68.8,\yt) rectangle (91.5,\yt+22.7);
+  \ifnum\r=1 \foreach \c/\q in {0/0,1/0,1/1,2/1} {\fill[\cm] (68.8+\c*5.675,\yt+\q*5.675) rectangle (74.475+\c*5.675,\yt+5.675+\q*5.675);} \fi
+  \ifnum\r=2 \foreach \c/\q in {2/2,3/2,2/3,3/3} {\fill[\cm] (68.8+\c*5.675,\yt+\q*5.675) rectangle (74.475+\c*5.675,\yt+5.675+\q*5.675);} \fi
+  \ifnum\r=3 \foreach \c/\q in {0/2,0/3,1/2,1/3,3/0} {\fill[\cm] (68.8+\c*5.675,\yt+\q*5.675) rectangle (74.475+\c*5.675,\yt+5.675+\q*5.675);} \fi
+  \foreach \k in {1,2,3} {
+    \draw[white, line width=0.5pt] (68.8+\k*5.675,\yt) -- (68.8+\k*5.675,\yt+22.7);
+    \draw[white, line width=0.5pt] (68.8,\yt+\k*5.675) -- (91.5,\yt+\k*5.675);
+  }
+  \draw[boxline, line width=0.4pt] (68.8,\yt) rectangle (91.5,\yt+22.7);
+  \node[lbl, anchor=north] at (80.15,\yt+24.5) {$\mathcal{M}^{\lab}$};
+  % --- ряды: три кривые ---
+  \fill[white, draw=boxline, line width=0.4pt] (121.3,\yb) rectangle (144.3,\yb+23.1);
+  \foreach \k/\ph in {0/0, 1/120, 2/240} {
+    \draw[\cw, line width=0.6pt] plot[domain=0:19.2, samples=48, smooth] ({123.2+\x}, {\yb+4.6+\k*7.05+1.7*sin(\x*28+\ph)});
+  }
+  \node[lbl, anchor=north] at (132.8,\yb+24.9) {$\mathbf{Y}_{\lab}$};
+  % --- ковариационная матрица 3x3 ---
+  \fill[\cc] (173.7,\yt) rectangle (196.4,\yt+22.7);
+  \foreach \k in {0,1,2} {\fill[\cd] (173.7+\k*7.567,\yt+\k*7.567) rectangle (181.267+\k*7.567,\yt+7.567+\k*7.567);}
+  \foreach \k in {1,2} {
+    \draw[white, line width=0.5pt] (173.7+\k*7.567,\yt) -- (173.7+\k*7.567,\yt+22.7);
+    \draw[white, line width=0.5pt] (173.7,\yt+\k*7.567) -- (196.4,\yt+\k*7.567);
+  }
+  \draw[boxline, line width=0.4pt] (173.7,\yt) rectangle (196.4,\yt+22.7);
+  \node[lbl, anchor=north] at (185.05,\yt+24.5) {$\mathbf{R}_{\lab}$};
+  % --- вектор признаков класса ---
+  \fill[\cc, draw=boxline, line width=0.4pt] (229.5,\yb) rectangle (237.3,\yb+23.1);
+  \node[lbl, anchor=north] at (233.4,\yb+25.8) {$\mathbf{p}_{\lab}$};
+  % --- сегмент общего признака ---
+  \fill[\cc, draw=boxline, line width=0.4pt] (270.6,\yb) rectangle (278.4,\yb+23.1);
+  % --- стрелки в строке ---
+  \draw[arr] (91.9,\yt+11.35) -- (120.6,\yt+11.35);
+  \draw[arr] (144.3,\yt+11.35) -- (173.0,\yt+11.35);
+  \draw[arr] (196.8,\yt+11.35) -- (228.8,\yt+11.35);
+  \draw[arr] (237.3,\yt+11.35) -- (269.9,\yt+11.35);
+}
+
+% ---------- стрелки от объекта к маскам ----------
+\draw[arr] (39.4,86.6) -- (68.1,47.15);
+\draw[arr] (39.4,86.6) -- (68.1,86.85);
+\draw[arr] (39.4,86.6) -- (68.1,131.0);
+
+% ---------- подписи на стрелках первой строки ----------
+\node[onarr] at (106.3,41.0) {$\mathbf{m}_1$};
+\node[onarr] at (159.0,42.3) {cov};
+\node[onarr, text=logc] at (212.6,39.6) {$\mathrm{Log}_{\bar{\mathbf{R}}_1}$};
+
+% ---------- многоточия между строками 2 и L ----------
+\foreach \x in {80.4, 132.8, 185.3, 233.4, 274.5} {\node[text=dots, inner sep=0pt] at (\x,110) {$\vdots$};}
+
+% ---------- общий признак и классификатор ----------
+\draw[boxline, line width=0.4pt] (274.5,58.5) -- (274.5,75.1);
+\node[lbl, anchor=north] at (274.3,146.3) {$\mathbf{p}\in\mathbb{R}^{d}$};
+\draw[arr] (278.4,86.6) -- (302.9,86.6);
+\node[onarr] at (290.8,80.3) {$\boldsymbol{\eta}$};
+\draw[frameline, line width=0.4pt, rounded corners=2pt] (303.6,78.8) rectangle (319.2,94.4);
+\node[inner sep=0pt] at (311.4,86.6) {$\hat{y}$};
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,163 @@
+% Схема мультимодальной реконструкции воздействия (Рисунок 4.1 диссертации, рисунок автореферата, слайд предзащиты).
+% Собирается отдельно из этой папки: pdflatex figure_1.tex -> figure_1.pdf
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{fontawesome5}
+\usetikzlibrary{arrows.meta,calc}
+
+% заливки блоков
+\definecolor{yel}{RGB}{255,242,204}  \definecolor{blu}{RGB}{218,232,252}
+\definecolor{grn}{RGB}{213,232,212}  \definecolor{pur}{RGB}{225,213,231}
+\definecolor{pnk}{RGB}{248,218,228}  \definecolor{sal}{RGB}{240,200,186}
+\definecolor{gry}{RGB}{242,242,242}  \definecolor{card}{RGB}{255,247,224}
+\definecolor{edge}{RGB}{120,120,120} \definecolor{conn}{RGB}{95,95,95}
+\definecolor{fire}{RGB}{232,96,28}   \definecolor{ice}{RGB}{66,146,214}
+\definecolor{wave}{RGB}{60,130,70}
+\definecolor{cellA}{RGB}{204,220,246} \definecolor{cellB}{RGB}{152,182,230} \definecolor{cellC}{RGB}{100,140,205}
+
+% блок-энкодер (сужается вправо): x0 x1 ytop ybot заливка
+\newcommand{\encblock}[5]{\draw[blk, fill=#5] (#1,#3) -- (#2,#3-0.45) -- (#2,#4+0.45) -- (#1,#4) -- cycle;}
+% блок-декодер (расширяется вправо)
+\newcommand{\decblock}[5]{\draw[blk, fill=#5] (#1,#3-0.45) -- (#2,#3) -- (#2,#4) -- (#1,#4+0.45) -- cycle;}
+% стопка отсчетов воздействия: x y нижнего левого угла передней карточки (1.6 x 0.9)
+\newcommand{\cardstack}[2]{\foreach \i in {2,1,0} {\fill[card, draw=edge, line width=0.5pt, rounded corners=1pt] ($(#1,#2)+(\i*0.15,\i*0.15)$) rectangle ($(#1,#2)+(\i*0.15+1.6,\i*0.15+0.9)$);}}
+% модальность 1, пространственный сигнал: стопка тензоров с картой 3x3 (1.5 x 1.0)
+\newcommand{\tensoricon}[2]{%
+  \foreach \i in {2,1} {\fill[blu, draw=edge, line width=0.5pt] ($(#1,#2)+(\i*0.15,\i*0.15)$) rectangle ($(#1,#2)+(\i*0.15+1.5,\i*0.15+1.0)$);}
+  \foreach \c/\r/\col in {0/0/cellB,1/0/cellA,2/0/cellC,0/1/cellA,1/1/cellC,2/1/cellB,0/2/cellC,1/2/cellB,2/2/cellA} {
+    \fill[\col] (#1+\c*0.5,#2+\r*0.3333) rectangle (#1+\c*0.5+0.5,#2+\r*0.3333+0.3333);}
+  \foreach \k in {1,2} {\draw[white, line width=0.6pt] (#1+\k*0.5,#2) -- (#1+\k*0.5,#2+1.0) (#1,#2+\k*0.3333) -- (#1+1.5,#2+\k*0.3333);}
+  \draw[edge, line width=0.5pt] (#1,#2) rectangle (#1+1.5,#2+1.0);}
+% модальность 2, многоканальный временной ряд: окно с четырьмя гладкими кривыми (1.7 x 1.2)
+\newcommand{\seriesicon}[2]{%
+  \fill[white, draw=edge, line width=0.5pt] (#1,#2) rectangle (#1+1.7,#2+1.2);
+  \begin{scope}\clip (#1+0.04,#2+0.04) rectangle (#1+1.66,#2+1.16);
+    \foreach \k/\ph in {0/0,1/110,2/200,3/300} {
+      \draw[wave, line width=0.55pt] plot[domain=0:1.5, samples=40, smooth] ({#1+0.1+\x},{#2+1.02-\k*0.28+0.09*sin(\x*330+\ph)});}
+  \end{scope}}
+% символ функции потерь: серый круг с белым крестом
+\newcommand{\losscircle}[3]{\fill[edge] (#1,#2) circle (#3); \draw[white, line width=1.1pt] (#1-0.55*#3,#2-0.55*#3) -- (#1+0.55*#3,#2+0.55*#3) (#1-0.55*#3,#2+0.55*#3) -- (#1+0.55*#3,#2-0.55*#3);}
+
+\begin{document}
+\begin{tikzpicture}[font=\small, line cap=round, line join=round,
+  panel/.style={draw=edge, densely dashed, line width=0.5pt},
+  blk/.style={draw=edge, line width=0.55pt},
+  bar/.style={draw=edge, line width=0.55pt, rounded corners=1pt},
+  lbl/.style={align=center, inner sep=1pt},
+  hdr/.style={font=\normalsize\bfseries, align=center, inner sep=1pt},
+  con/.style={conn, line width=0.6pt},
+  arr/.style={con, ->, >={Stealth[length=3pt,width=2.6pt]}},
+  ic/.style={font=\normalsize, inner sep=0pt},
+]
+
+% ---------- панели ----------
+\draw[panel] (0.1,-0.1) rectangle (11.3,-12.4);
+\draw[panel] (11.5,-0.1) rectangle (24.6,-7.3);
+\draw[panel] (11.5,-7.4) rectangle (24.6,-12.4);
+
+% ---------- легенда ----------
+\losscircle{0.8}{-0.65}{0.2}
+\node[lbl, anchor=west, align=left] at (1.1,-0.65) {Контрастивная\\функция потерь};
+\node[ic, text=fire] at (4.4,-0.65) {\faFire};
+\node[lbl, anchor=west] at (4.7,-0.65) {Обучаемый};
+\node[ic, text=ice] at (7.1,-0.65) {\faSnowflake};
+\node[lbl, anchor=west] at (7.4,-0.65) {Замороженный};
+
+% ---------- левая панель: контрастивное обучение ----------
+\node[hdr] at (5.7,-2.1) {Контрастивное обучение\\объединенного представления\\модальностей};
+
+\cardstack{1.25}{-5.96}
+\node[lbl] at (2.2,-6.3) {Воздействие};
+\encblock{3.7}{5.7}{-4.2}{-6.53}{yel}
+\node[lbl] at (4.7,-5.36) {Энкодер\\воздействия};
+\node[ic, text=ice] at (5.55,-4.55) {\faSnowflake};
+\draw[con] (3.2,-5.36) -- (3.7,-5.36);
+
+\tensoricon{1.3}{-8.47}
+\node[lbl] at (2.2,-8.85) {Модальность 1};
+\encblock{3.7}{5.7}{-6.7}{-9.03}{blu}
+\node[lbl] at (4.7,-7.87) {Энкодер 1};
+\node[ic, text=fire] at (5.55,-7.05) {\faFire};
+\draw[con] (3.2,-7.87) -- (3.7,-7.87);
+
+\seriesicon{1.35}{-10.97}
+\node[lbl] at (2.2,-11.35) {Модальность 2};
+\encblock{3.7}{5.7}{-9.2}{-11.53}{grn}
+\node[lbl] at (4.7,-10.37) {Энкодер 2};
+\node[ic, text=fire] at (5.55,-9.55) {\faFire};
+\draw[con] (3.2,-10.37) -- (3.7,-10.37);
+
+\encblock{6.4}{8.4}{-8.07}{-10.4}{pur}
+\node[lbl] at (7.4,-9.23) {Модуль\\объединения};
+\node[ic, text=fire] at (8.25,-8.42) {\faFire};
+\draw[con] (5.7,-7.87) to[out=0,in=180] (6.4,-8.95);
+\draw[con] (5.7,-10.37) to[out=0,in=180] (6.4,-9.5);
+
+\draw[bar, fill=yel] (8.8,-6.59) rectangle (9.2,-4.13);
+\node[lbl] at (9.0,-3.5) {Эмбеддинг\\воздействия};
+\draw[arr] (5.7,-5.36) -- (8.75,-5.36);
+\draw[bar, fill=pur] (8.8,-10.46) rectangle (9.2,-8.0);
+\node[lbl, anchor=north] at (9.0,-10.6) {Объединенное\\представление};
+\draw[arr] (8.4,-9.23) -- (8.75,-9.23);
+
+\draw[con] (9.2,-5.36) to[out=0,in=180] (10.35,-7.3);
+\draw[con] (9.2,-9.23) to[out=0,in=180] (10.35,-7.3);
+\losscircle{10.6}{-7.3}{0.25}
+
+% ---------- правая верхняя панель: реконструкция ----------
+\node[hdr] at (18.05,-0.85) {Реконструкция воздействия};
+
+\tensoricon{12.1}{-3.43}
+\node[lbl] at (13.0,-3.8) {Модальность 1};
+\encblock{14.3}{16.3}{-1.67}{-4.0}{blu}
+\node[lbl] at (15.3,-2.83) {Энкодер 1};
+\node[ic, text=ice] at (16.15,-2.02) {\faSnowflake};
+\draw[con] (13.95,-2.83) -- (14.3,-2.83);
+
+\seriesicon{12.15}{-5.93}
+\node[lbl] at (13.0,-6.3) {Модальность 2};
+\encblock{14.3}{16.3}{-4.17}{-6.5}{grn}
+\node[lbl] at (15.3,-5.33) {Энкодер 2};
+\node[ic, text=ice] at (16.15,-4.52) {\faSnowflake};
+\draw[con] (13.95,-5.33) -- (14.3,-5.33);
+
+\encblock{16.9}{18.9}{-3.24}{-5.57}{pur}
+\node[lbl] at (17.9,-4.4) {Модуль\\объединения};
+\node[ic, text=ice] at (18.75,-3.59) {\faSnowflake};
+\draw[con] (16.3,-2.83) to[out=0,in=180] (16.9,-4.12);
+\draw[con] (16.3,-5.33) to[out=0,in=180] (16.9,-4.68);
+
+\draw[bar, fill=pur] (19.3,-5.42) rectangle (19.7,-2.96);
+\node[lbl] at (19.5,-2.4) {Объединенное\\представление};
+\draw[arr] (18.9,-4.4) -- (19.25,-4.4);
+
+\decblock{20.3}{22.1}{-3.24}{-5.57}{pnk}
+\node[lbl] at (21.2,-4.4) {Две стадии\\генерации};
+\draw[arr] (19.7,-4.3) -- (20.25,-4.3);
+\cardstack{22.5}{-4.85}
+\node[lbl] at (23.45,-5.2) {Реконструкция};
+\draw[arr] (22.1,-4.3) -- (22.45,-4.3);
+\draw[con] (21.2,-5.35) to[out=-90,in=90] (19.0,-7.5);
+
+% ---------- правая нижняя панель: двухстадийная генерация ----------
+\node[hdr] at (18.05,-7.98) {Двухстадийный процесс генерации};
+
+\draw[bar, fill=pur] (14.9,-12.08) rectangle (15.3,-9.62);
+\node[lbl] at (15.1,-9.0) {Объединенное\\представление};
+\draw[blk, fill=gry] (15.9,-11.44) rectangle (18.5,-10.26);
+\node[lbl] at (17.2,-10.85) {Априорная\\модель};
+\node[ic, text=fire] at (18.35,-10.42) {\faFire};
+\draw[arr] (15.3,-10.85) -- (15.85,-10.85);
+\draw[bar, fill=yel] (19.1,-12.08) rectangle (19.5,-9.62);
+\node[lbl] at (19.3,-9.0) {Эмбеддинг\\воздействия};
+\draw[arr] (18.5,-10.85) -- (19.05,-10.85);
+\decblock{19.9}{22.7}{-9.9}{-12.23}{sal}
+\node[lbl] at (21.3,-11.07) {Диффузионная\\модель};
+\node[ic, text=ice] at (22.55,-10.25) {\faSnowflake};
+\draw[arr] (19.5,-10.85) -- (19.85,-10.85);
+
+\end{tikzpicture}
+\end{document}

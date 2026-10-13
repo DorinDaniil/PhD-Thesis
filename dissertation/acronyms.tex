@@ -3,7 +3,6 @@
 \nomenclature[a02]{МЭГ}{магнитоэнцефалография}
 \nomenclature[a03]{фМРТ}{функциональная магнитно-резонансная томография}
 \nomenclature[a04]{ЭЭГ}{электроэнцефалография}
-\nomenclature[a05]{BAD}{алгоритм декодирования активности мозга (англ.~Brain Activity Decoder)}
 \nomenclature[a06]{BOLD}{сигнал, зависящий от~уровня оксигенации крови (англ.~Blood-Oxygen-Level-Dependent)}
 \nomenclature[a07]{CI}{доверительный интервал (англ.~Confidence Interval)}
 \nomenclature[a08]{CLIP}{англ.~Contrastive Language-Image Pre-training}
@@ -38,28 +37,28 @@
 % Условные обозначения: в порядке первого упоминания
 \nomenclature[b00]{$\mathcal{X}_{(m)}$}{пространство наблюдений модальности~$m$}
 \nomenclature[b01]{$\mathcal{X} = \mathcal{X}_{(1)} \times \cdots \times \mathcal{X}_{(M)}$}{совместное пространство наблюдений}
-\nomenclature[b02]{$\mathcal{X}_f, \mathcal{X}_e, \mathcal{X}_s$}{пространства данных фМРТ, ЭЭГ и~временных рядов фМРТ}
-\nomenclature[b03]{$\mathcal{Y}$}{пространство стимулов}
-\nomenclature[b04]{$\mathbf{F}_i, \mathbf{E}_i, \mathbf{I}_i$}{фМРТ, ЭЭГ и~изображение $i$-го наблюдения}
-\nomenclature[b05]{$\mathbf{S}, \mathcal{T}, L$}{временной ряд фМРТ, его длина и~число категорий стимулов}
-\nomenclature[b06]{$\mathbf{u}$}{бинарный ряд стимуляции}
+\nomenclature[b02]{$\mathcal{X}_f, \mathcal{X}_e, \mathcal{X}_s$}{пространства наблюдений модальностей, в~приложении фМРТ, ЭЭГ и~временных рядов фМРТ}
+\nomenclature[b03]{$\mathcal{Y}$}{пространство воздействий}
+\nomenclature[b04]{$\mathbf{F}_i, \mathbf{E}_i, \mathbf{I}_i$}{отсчеты двух модальностей и~воздействие $i$-го наблюдения, в~приложении фМРТ, ЭЭГ и~изображение}
+\nomenclature[b05]{$\mathbf{S}, \mathcal{T}, L$}{многоканальный временной ряд, его длина и~число категорий воздействия}
+\nomenclature[b06]{$\mathbf{u}$}{бинарный ряд воздействия}
 \nomenclature[b07]{$\mathfrak{D}$}{обучающая выборка}
 \nomenclature[b08]{$N, N_y$}{объем выборки и~число объектов класса~$y$}
 \nomenclature[b09]{$\mathbf{g}$}{общее отображение декодирования $\mathcal{X} \to \mathcal{Y}$}
-\nomenclature[b10]{$\mathbf{q}$}{прогноз фМРТ-отклика по~стимулу $\mathcal{Y} \to \mathcal{X}_f$}
+\nomenclature[b10]{$\mathbf{q}$}{прогноз отклика по~воздействию $\mathcal{Y} \to \mathcal{X}_f$}
 \nomenclature[b11]{$\mathbf{h}$}{классификатор временных рядов $\mathcal{X}_s \to \{1, \ldots, L\}$}
 \nomenclature[b12]{$\mathbf{f}$}{целевое отображение $\mathcal{X}_f \times \mathcal{X}_e \to \mathcal{Y}$}
-\nomenclature[b13]{$\Delta t$}{гемодинамический лаг BOLD-сигнала}
-\nomenclature[b14]{$\mu, \nu$}{частоты регистрации фМРТ и~кадров видеоряда}
-\nomenclature[b15]{$\boldsymbol{\delta}(t)$}{приращение фМРТ-скана между соседними кадрами}
+\nomenclature[b13]{$\Delta t$}{лаг отклика, в~приложении гемодинамический лаг}
+\nomenclature[b14]{$\mu, \nu$}{частоты регистрации отклика и~воздействия}
+\nomenclature[b15]{$\boldsymbol{\delta}(t)$}{приращение отклика между соседними отсчетами}
 \nomenclature[b16]{$\lambda$}{коэффициент $L_2$-регуляризации}
 \nomenclature[b17]{$\mathcal{M}, \mathcal{M}^{y}$}{бинарная маска активности (общая и~для класса~$y$)}
-\nomenclature[b18]{$k_s, h$}{размер ядра сжатия и~число активных вокселей маски}
-\nomenclature[b19]{$\mathbf{R}_i \in \mathbb{S}_{+}^{h}$}{ковариационная матрица активных вокселей $i$-го объекта}
+\nomenclature[b18]{$k_s, h$}{размер ядра сжатия и~число активных каналов маски}
+\nomenclature[b19]{$\mathbf{R}_i \in \mathbb{S}_{+}^{h}$}{ковариационная матрица активных каналов $i$-го объекта}
 \nomenclature[b20]{$\bar{\mathbf{R}}$}{риманово среднее ковариационных матриц}
 \nomenclature[b21]{$\mathbf{P}_i$}{проекция ковариационной матрицы на~касательное пространство}
-\nomenclature[b22]{$\mathcal{E}_f, \mathcal{E}_e, \mathcal{F}$}{энкодеры фМРТ, ЭЭГ и~модуль объединения}
-\nomenclature[b23]{$\mathbf{Z}_f, \mathbf{Z}_e, \mathbf{Z}_c, \mathbf{Z}_I$}{эмбеддинги фМРТ, ЭЭГ, комбинированный и~CLIP}
+\nomenclature[b22]{$\mathcal{E}_f, \mathcal{E}_e, \mathcal{F}$}{энкодеры модальностей, в~приложении фМРТ и~ЭЭГ, и~модуль объединения}
+\nomenclature[b23]{$\mathbf{Z}_f, \mathbf{Z}_e, \mathbf{Z}_c, \mathbf{Z}_I$}{эмбеддинги модальностей, объединенный эмбеддинг и~эмбеддинг воздействия}
 \nomenclature[b24]{$d_f, d_e, d$}{размерности латентных пространств}
 \nomenclature[b25]{$\tau$}{обучаемая температура контрастивной функции потерь}
 \nomenclature[b26]{$\mathcal{L}_{\text{contr}}$}{контрастивная функция потерь}
@@ -69,9 +68,9 @@
 \nomenclature[b30]{$\mathbf{S}_i, \mathbf{p}_i$}{отбеленный касательный вектор и~вектор признаков $i$-го объекта}
 \nomenclature[b31]{$\omega(\mathbf{S})$}{спектральный разброс симметричной матрицы}
 \nomenclature[b32]{$g(\omega), c(\rho)$}{константы искажения расстояний касательной проекцией}
-\nomenclature[b33]{$\mathbf{M}, \bar{\mathbf{M}}$}{маска наблюдаемости записи ЭЭГ и~ее дополнение}
-\nomenclature[b34]{$\mathbf{E}_{\mathrm{obs}}, \mathbf{E}_{\mathrm{miss}}$}{наблюдаемая и~пропущенная части записи ЭЭГ}
-\nomenclature[b35]{$\mathbf{D}$}{матрица расстояний между электродами}
+\nomenclature[b33]{$\mathbf{M}, \bar{\mathbf{M}}$}{маска наблюдаемости многоканальной записи и~ее дополнение}
+\nomenclature[b34]{$\mathbf{E}_{\mathrm{obs}}, \mathbf{E}_{\mathrm{miss}}$}{наблюдаемая и~пропущенная части записи}
+\nomenclature[b35]{$\mathbf{D}$}{матрица расстояний между сенсорами}
 \nomenclature[b36]{$v_{\theta}$}{векторное поле модели восстановления пропусков}
 \nomenclature[b37]{$\mathbb{I}$}{единичная матрица}
 

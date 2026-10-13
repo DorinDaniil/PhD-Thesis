@@ -12,16 +12,13 @@
 %\insertbiblioauthor                        % Подключаем Bib-базы: работы автора единым списком 
 % \insertbiblioauthorgrouped                 % Подключаем Bib-базы: работы автора сгруппированные (ВАК, WoS, Scopus и т.д.)
 
-\begin{refcontext}[labelprefix=A]
-\insertbiblioauthorgrouped
-\end{refcontext}
-\clearpage
-\insertbiblioexternal
+% Единый список литературы: работы автора и внешние источники общим алфавитным списком
+\printbibliography[heading=pubgroup, keyword=bibliofull, section=0, title=\bibtitlefull]
 
-% Невидимый список для подсчета числа источников в «Списке литературы» (без работ автора): счетчик citenum
+% Невидимый список для подсчета числа источников: счетчик citenum
 % используется во введении в абзаце «Объем и структура работы»
 \ifnumequal{\value{draft}}{0}{%
-    \printbibliography[heading=nobibheading, section=0, env=counter, keyword=biblioexternal]%
+    \printbibliography[heading=nobibheading, section=0, env=counter, keyword=bibliofull]%
 }{}
 
 \ifdefmacro{\microtypesetup}{\microtypesetup{protrusion=true}}{}

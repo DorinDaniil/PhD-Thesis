@@ -7,7 +7,7 @@
 \usepackage[%
 backend=biber,% движок
 bibencoding=utf8,% кодировка bib файла
-sorting=none,% настройка сортировки списка литературы
+sorting=nyt,% алфавитная сортировка: автор, год, заглавие
 style=gost-numeric,% стиль цитирования и библиографии (по ГОСТ)
 language=autobib,% получение языка из babel/polyglossia, default: autobib % если ставить autocite или auto, то цитаты в тексте с указанием страницы, получат указание страницы на языке оригинала
 autolang=other,% многоязычная библиография
@@ -24,7 +24,7 @@ isbn=false,% Показывать или нет ISBN, ISSN, ISRN
 \usepackage[%
 backend=biber,% движок
 bibencoding=utf8,% кодировка bib файла
-sorting=none,% настройка сортировки списка литературы
+sorting=nyt,% алфавитная сортировка: автор, год, заглавие
 % defernumbers=true, % откомментируйте, если требуется правильная нумерация ссылок на литературу в режиме черновика. Замедляет сборку
 ]{biblatex}[2016/09/17]%
 }
@@ -230,6 +230,17 @@ sorting=none,% настройка сортировки списка литера
         }
         \map[overwrite]{ % добавляем ключевые слова, чтобы различать источники
             \step[fieldset=keywords, fieldvalue={,bibliofull},append=true]
+        }
+        \map[overwrite]{ % русскоязычные записи (кириллица в авторе или заглавии) идут первыми, остальные --- вторым алфавитным рядом (ГОСТ Р 7.0.11, п. 5.6.7)
+            \step[fieldset=presort, fieldvalue={zz}]
+        }
+        \map[overwrite]{
+            \step[fieldsource=author, match=\regexp{\p{Cyrillic}}, final]
+            \step[fieldset=presort, fieldvalue={aa}]
+        }
+        \map[overwrite]{
+            \step[fieldsource=title, match=\regexp{\p{Cyrillic}}, final]
+            \step[fieldset=presort, fieldvalue={aa}]
         }
 %        \map[overwrite]{% стираем значения всех полей series
 %            \step[fieldset=series, null]

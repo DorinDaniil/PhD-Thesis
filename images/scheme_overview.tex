@@ -1,0 +1,65 @@
+% Обзорная схема работы (Рисунок 1.1 диссертации и Рисунок 1 автореферата).
+% Собирается отдельно: pdflatex scheme_overview.tex -> scheme_overview.pdf
+\documentclass[tikz,border=3pt]{standalone}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usetikzlibrary{arrows.meta,positioning,calc}
+
+% цвета строк
+\definecolor{fillA}{RGB}{232,238,247} \definecolor{lineA}{RGB}{70,110,160}  \definecolor{darkA}{RGB}{200,215,235}
+\definecolor{fillB}{RGB}{240,238,222} \definecolor{lineB}{RGB}{120,120,70}  \definecolor{darkB}{RGB}{214,210,170}
+\definecolor{fillC}{RGB}{248,230,226} \definecolor{lineC}{RGB}{170,70,60}   \definecolor{darkC}{RGB}{236,206,198}
+\definecolor{lagc}{RGB}{70,110,160}
+\definecolor{soft}{RGB}{110,110,110}
+
+\begin{document}
+\begin{tikzpicture}[
+  font=\small, line cap=round, line join=round,
+  >={Stealth[length=5pt,width=4pt]},
+  box/.style={draw, rounded corners=3pt, thick, minimum width=5.2cm, minimum height=1.55cm, align=center, text width=4.9cm, inner sep=3pt},
+  rowlbl/.style={align=right, text width=2.8cm, font=\small},
+  arr/.style={->, thick},
+  lag/.style={->, thick, lagc, densely dashed},
+  lagline/.style={thick, lagc, densely dashed},
+]
+
+% ---------- строка I: временная динамика ----------
+\node[box, fill=fillA, draw=lineA] (a1) at (0,0) {воздействие};
+\node[box, fill=fillA, draw=lineA, right=0.7cm of a1] (a2) {линейная авторегрессионная модель прогноза отклика};
+\node[box, fill=darkA, draw=lineA, right=0.7cm of a2] (a3) {оценка лага $\Delta t$};
+\draw[arr, lineA] (a1) -- (a2); \draw[arr, lineA] (a2) -- (a3);
+\node[rowlbl, left=0.5cm of a1] {I. Временная\\динамика};
+
+% ---------- строка II: пространство и время ----------
+\node[box, fill=fillB, draw=lineB, below=1.35cm of a1] (b1) {многоканальный временной ряд};
+\node[box, fill=fillB, draw=lineB, right=0.7cm of b1] (b2) {маски информативных каналов,\\риманова геометрия ковариаций};
+\node[box, fill=darkB, draw=lineB, right=0.7cm of b2] (b3) {категория воздействия};
+\draw[arr, lineB] (b1) -- (b2); \draw[arr, lineB] (b2) -- (b3);
+\node[rowlbl, left=0.5cm of b1] {II. Пространство\\и время};
+
+% ---------- строка III: мультимодальность ----------
+\node[box, fill=fillC, draw=lineC, below=1.35cm of b1] (c1) {две синхронно\\регистрируемые модальности};
+\node[box, fill=fillC, draw=lineC, right=0.7cm of c1] (c2) {восстановление каналов,\\энкодеры, объединение\\представлений};
+\node[box, fill=darkC, draw=lineC, right=0.7cm of c2] (c3) {реконструкция воздействия};
+\draw[arr, lineC] (c1) -- (c2); \draw[arr, lineC] (c2) -- (c3);
+\node[rowlbl, left=0.5cm of c1] {III. Мульти-\\модальность};
+
+% ---------- передача лага ----------
+\coordinate (r) at ($(a3.east)+(0.45,0)$);
+\coordinate (b2u) at ($(b2.south)+(0,-0.7)$);
+\coordinate (c1u) at ($(c1.south)+(0,-0.7)$);
+\draw[lagline] (a3.east) -- (r) -- (r |- b2u) -- (b2u);
+\draw[lag] (b2u) -- (b2.south) node[midway, right=3pt, font=\small, text=lagc, fill=white, inner sep=1pt] {$\Delta t$};
+\draw[lagline] (r |- b2u) -- (r |- c1u) -- (c1u);
+\draw[lag] (c1u) -- (c1.south) node[midway, right=3pt, font=\small, text=lagc, fill=white, inner sep=1pt] {$\Delta t$};
+
+% ---------- ось усложнения ----------
+\coordinate (top) at ($(a1.north west)+(-3.7,0)$);
+\coordinate (bot) at ($(c1.south west)+(-3.7,0)$);
+\draw[->, soft, thick] (top) -- (bot);
+\node[rotate=90, text=soft, font=\small, anchor=south] at ($(top)!0.5!(bot)+(-0.12,0)$) {усложнение учитываемой структуры};
+
+\end{tikzpicture}
+\end{document}

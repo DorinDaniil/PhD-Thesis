@@ -1,0 +1,115 @@
+% Схема модели прогноза отклика по воздействию (Рисунок 2.1 диссертации и рисунок в автореферате).
+% Собирается отдельно из этой папки: pdflatex scheme.tex -> scheme.pdf
+\documentclass[tikz,border=3pt]{standalone}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{pillblue}{RGB}{118,214,255}
+\definecolor{pillgreen}{RGB}{115,250,121}
+\definecolor{pillyellow}{RGB}{250,226,50}
+\definecolor{embred}{RGB}{255,100,78}
+\definecolor{tenspink}{RGB}{239,95,167}
+\definecolor{tensred}{RGB}{238,34,13}
+\definecolor{soft}{RGB}{110,110,110}
+\definecolor{ser1}{RGB}{40,90,170}
+\definecolor{ser2}{RGB}{210,120,30}
+\definecolor{ser3}{RGB}{50,140,70}
+\definecolor{chan}{RGB}{60,60,60}
+
+\begin{document}
+\begin{tikzpicture}[
+  line cap=round, line join=round,
+  >={Triangle[length=5pt,width=5pt]},
+  arr/.style={->, line width=1.1pt},
+  pill/.style={draw, line width=1.1pt, rounded corners=0.5cm, minimum height=0.95cm, inner xsep=9pt, inner ysep=4pt, align=center, font=\normalsize},
+  ttl/.style={font=\normalsize\bfseries, align=center, inner sep=1pt},
+  dim/.style={font=\normalsize, inner sep=1pt},
+  ptitle/.style={font=\LARGE\bfseries, inner sep=2pt},
+  thinl/.style={line width=0.35pt, soft},
+  axis/.style={->, line width=0.5pt, soft, >={Stealth[length=4pt,width=3pt]}},
+]
+
+% ---------- панели ----------
+\draw[line width=1.1pt] (0.2,-1.0) rectangle (13.2,-10.2);
+\draw[line width=1.1pt] (13.5,-1.0) rectangle (24.2,-10.2);
+\node[ptitle] at (6.7,-0.5) {Предобработка};
+\node[ptitle] at (18.85,-0.5) {Прогноз};
+
+% ---------- строка 1: ряды воздействия -> энкодер -> эмбеддинги ----------
+\node[ttl] at (2.9,-1.75) {Последовательность\\воздействий};
+\draw[line width=1.1pt, fill=white] (1.25,-5.05) rectangle (4.55,-2.85);
+\begin{scope}
+  \clip (1.3,-5.0) rectangle (4.5,-2.9);
+  \draw[ser1, line width=0.7pt] plot[domain=0:3.3, samples=80, smooth] ({1.25+\x}, {-3.4+0.22*sin(\x*190)+0.12*sin(\x*470+40)});
+  \draw[ser2, line width=0.7pt] plot[domain=0:3.3, samples=80, smooth] ({1.25+\x}, {-3.95+0.2*sin(\x*150+120)+0.13*sin(\x*560+10)});
+  \draw[ser3, line width=0.7pt] plot[domain=0:3.3, samples=80, smooth] ({1.25+\x}, {-4.47+0.21*sin(\x*230+200)+0.1*sin(\x*640+90)});
+\end{scope}
+\node[dim] at (2.9,-5.4) {$\mathbf{y}(t)$};
+
+\node[pill, fill=pillblue] (enc) at (7.9,-3.95) {Предобученный\\энкодер};
+\draw[arr] (4.7,-3.95) -- (enc.west);
+
+\foreach \i in {3,2,1,0} {
+  \fill[embred, draw=black, line width=1.1pt] ($(10.65,-5.45)+(\i*0.21,\i*0.21)$) rectangle ($(10.96,-3.05)+(\i*0.21,\i*0.21)$);
+}
+\draw[arr] (enc.east) -- (10.65,-3.95);
+\node[ttl] at (11.1,-1.7) {Эмбеддинги};
+\node[dim] at (11.1,-5.75) {$d\times 1$};
+
+% ---------- строка 2: многоканальный отклик -> нормировка -> тензоры ----------
+\node[ttl] at (2.9,-6.35) {Многоканальный отклик};
+\draw[line width=1.1pt, fill=white] (1.25,-9.4) rectangle (4.55,-7.2);
+\begin{scope}
+  \clip (1.3,-9.35) rectangle (4.5,-7.25);
+  \foreach \k in {0,...,6} {
+    \draw[chan, line width=0.55pt] plot[domain=0:3.3, samples=90, smooth]
+      ({1.25+\x}, {-7.5-\k*0.265+0.06*sin(\x*(330+\k*41)+\k*57)+0.045*sin(\x*(870+\k*63)+\k*23)+0.03*sin(\x*(1500+\k*90))});
+  }
+\end{scope}
+\node[dim] at (2.9,-9.75) {$\mathbf{F}(t)$};
+
+\node[pill, fill=pillgreen] (norm) at (7.9,-8.3) {Нормировка};
+\draw[arr] (4.7,-8.3) -- (norm.west);
+
+\foreach \i in {3,2,1,0} {
+  \fill[tenspink, draw=black, line width=1.1pt] ($(10.03,-9.31)+(\i*0.22,\i*0.22)$) rectangle ($(11.17,-7.49)+(\i*0.22,\i*0.22)$);
+}
+\draw[arr] (norm.east) -- (10.03,-8.3);
+\node[ttl] at (10.93,-6.35) {Тензоры};
+\node[dim] at (10.93,-9.75) {$X \times Y \times Z$};
+
+% ---------- прогноз ----------
+\node[ttl] at (14.7,-3.6) {Эмбеддинг\\на отсчете\\$k_\ell-\Delta t$};
+\fill[embred, draw=black, line width=1.1pt] (14.58,-6.155) rectangle (14.82,-4.325);
+
+\node[pill, fill=pillyellow] (lin) at (16.95,-5.24) {Линейная\\модель};
+\draw[arr] (14.82,-5.24) -- (lin.west);
+
+\node[ttl] at (19.6,-3.55) {Приращение отклика\\между соседними\\отсчетами};
+\draw[top color=tensred, bottom color=tenspink, line width=1.1pt] (19.1,-6.06) rectangle (20.13,-4.41);
+\draw[line width=0.3pt] (19.32,-5.8) rectangle (19.62,-5.5);
+\draw[arr] (lin.east) -- (19.1,-5.24);
+\node[dim] at (19.615,-6.4) {$\ell$};
+
+\draw[line width=1.1pt] (20.15,-5.0) to[out=0,in=180] (21.98,-4.31);
+\draw[line width=1.1pt] (20.15,-5.48) to[out=0,in=180] (21.98,-6.17);
+
+\node[ttl] at (22.65,-1.9) {Тензоры};
+\fill[tensred, draw=black, line width=1.1pt, opacity=0.45] (22.22,-3.92) rectangle (23.25,-2.27);
+\fill[tenspink, draw=black, line width=1.1pt, opacity=0.45] (22.22,-8.21) rectangle (23.25,-6.56);
+\fill[tensred, draw=black, line width=1.1pt] (22.0,-5.13) rectangle (23.03,-3.48);
+\fill[tenspink, draw=black, line width=1.1pt] (22.0,-6.99) rectangle (23.03,-5.34);
+\node[dim, anchor=west] at (23.12,-4.31) {$\ell-1$};
+\node[dim, anchor=west] at (23.12,-6.17) {$\ell$};
+
+% ---------- пояснение: регрессия для каждого канала ----------
+\draw[thinl] (14.82,-4.325) -- (17.5,-7.25);
+\draw[thinl] (14.82,-6.155) -- (17.5,-7.25);
+\draw[thinl] (19.32,-5.8) -- (17.5,-7.25);
+\node[dim, anchor=north, align=center] at (17.5,-7.35) {Линейная регрессия\\для каждого канала};
+
+\end{tikzpicture}
+\end{document}
