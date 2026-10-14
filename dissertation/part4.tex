@@ -168,7 +168,7 @@ p(\mathbf{x}, \mathbf{z}_I \mid \mathbf{z}_c) \propto p(\mathbf{z}_I \mid \mathb
 \begin{equation}\label{eq:prior_loss}
 \mathcal{L}_{\text{prior}}(\boldsymbol{\theta}) = \mathbb{E}_{\mathbf{z}_I, \mathbf{z}_c, t, \boldsymbol{\epsilon}} \left\| \boldsymbol{\epsilon} - \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\mathbf{z}_I^{(t)}, t, \mathbf{z}_c)\right\|_2^2.
 \end{equation}
-На инференсе априорная диффузионная модель генерирует оценку $\widehat{\mathbf{z}}_I \approx \mathbf{z}_I$ итеративной процедурой расшумления, согласующей $\mathbf{z}_c$ с пространством эмбеддингов воздействия. Энкодеры $\mathcal{E}_f$, $\mathcal{E}_e$ и модуль объединения $\mathcal{F}$ остаются замороженными, что упрощает схему и стабилизирует обучение.
+На инференсе априорная диффузионная модель генерирует оценку $\widehat{\mathbf{z}}_I$ эмбеддинга $\mathbf{z}_I$ итеративной процедурой расшумления, согласующей $\mathbf{z}_c$ с пространством эмбеддингов воздействия. Энкодеры $\mathcal{E}_f$, $\mathcal{E}_e$ и модуль объединения $\mathcal{F}$ остаются замороженными, что упрощает схему и стабилизирует обучение.
 
 \paragraph{Стадия II: генерация воздействия при условии $\widehat{\mathbf{z}}_I$.}
 Для реконструкции используется предобученная условная генеративная модель домена воздействия
