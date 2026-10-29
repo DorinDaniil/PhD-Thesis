@@ -26,8 +26,8 @@
 ]
 
 % ---------- строка I: временная динамика ----------
-\node[box, fill=fillA, draw=lineA] (a1) at (0,0) {воздействие};
-\node[box, fill=fillA, draw=lineA, right=0.7cm of a1] (a2) {линейная авторегрессионная модель прогноза отклика};
+\node[box, fill=fillA, draw=lineA] (a1) at (0,0) {стимул};
+\node[box, fill=fillA, draw=lineA, right=0.7cm of a1] (a2) {линейная авторегрессионная модель прогноза сигнала};
 \node[box, fill=darkA, draw=lineA, right=0.7cm of a2] (a3) {оценка лага $\Delta t$};
 \draw[arr, lineA] (a1) -- (a2); \draw[arr, lineA] (a2) -- (a3);
 \node[rowlbl, left=0.5cm of a1] {I. Временная\\динамика};
@@ -35,14 +35,14 @@
 % ---------- строка II: пространство и время ----------
 \node[box, fill=fillB, draw=lineB, below=1.35cm of a1] (b1) {многоканальный временной ряд};
 \node[box, fill=fillB, draw=lineB, right=0.7cm of b1] (b2) {маски информативных каналов,\\риманова геометрия ковариаций};
-\node[box, fill=darkB, draw=lineB, right=0.7cm of b2] (b3) {категория воздействия};
+\node[box, fill=darkB, draw=lineB, right=0.7cm of b2] (b3) {категория стимула};
 \draw[arr, lineB] (b1) -- (b2); \draw[arr, lineB] (b2) -- (b3);
 \node[rowlbl, left=0.5cm of b1] {II. Пространство\\и время};
 
 % ---------- строка III: мультимодальность ----------
 \node[box, fill=fillC, draw=lineC, below=1.35cm of b1] (c1) {две синхронно\\регистрируемые модальности};
 \node[box, fill=fillC, draw=lineC, right=0.7cm of c1] (c2) {восстановление каналов,\\энкодеры, объединение\\представлений};
-\node[box, fill=darkC, draw=lineC, right=0.7cm of c2] (c3) {реконструкция воздействия};
+\node[box, fill=darkC, draw=lineC, right=0.7cm of c2] (c3) {реконструкция стимула};
 \draw[arr, lineC] (c1) -- (c2); \draw[arr, lineC] (c2) -- (c3);
 \node[rowlbl, left=0.5cm of c1] {III. Мульти-\\модальность};
 
