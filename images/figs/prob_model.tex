@@ -1,0 +1,47 @@
+% Вероятностная модель реконструкции стимула (Рисунок 4.1 диссертации и рисунок автореферата).
+% Собирается отдельно из этой папки: pdflatex prob_model.tex -> prob_model.pdf
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usetikzlibrary{arrows.meta}
+
+% цвета: обучение энкодеров, стадия I, стадия II
+\definecolor{cmod}{RGB}{125,40,160}
+\definecolor{logc}{RGB}{0,0,200}
+\definecolor{expc}{RGB}{200,0,0}
+\definecolor{sblue}{rgb}{0.2,0.2,0.7}
+
+\begin{document}
+\begin{tikzpicture}[x=1.15cm, y=1.1cm, font=\small, >={Latex[length=2mm, width=1.6mm]},
+  rv/.style={circle, draw, minimum size=9.5mm, inner sep=0pt, font=\normalsize},
+  obs/.style={rv, fill=black!10, minimum size=10.5mm},
+  op/.style={draw=cmod, rounded corners=1pt, minimum size=6.5mm, inner sep=1pt, font=\normalsize}]
+% наблюдаемые сигналы, объединение, представления и стимул
+\node[obs] (F1) at (0,0.55) {$\mathbf{F}_{(1)}$};
+\node[obs] (F2) at (0,-0.55) {$\mathbf{F}_{(2)}$};
+\node[op] (U) at (1.7,0) {$\mathcal{F}$};
+\node[rv, draw=cmod] (zc) at (3.0,0) {$\mathbf{z}_c$};
+\node[rv] (zy) at (5.9,0) {$\mathbf{z}_y$};
+\node[rv] (y) at (8.8,0) {$\mathbf{y}$};
+% энкодеры модальностей и модуль объединения
+\draw[->, cmod, thick] (F1) -- node[above, pos=0.45]{$\mathcal{E}_{(1)}$} (U);
+\draw[->, cmod, thick] (F2) -- node[below, pos=0.45]{$\mathcal{E}_{(2)}$} (U);
+\draw[->, cmod, thick] (U) -- (zc);
+% две стадии генерации
+\draw[->, logc, thick] (zc) -- node[below, align=center]{$p(\mathbf{z}_y \mid \mathbf{z}_c)$\\[-1pt]{\footnotesize стадия I}} (zy);
+\draw[->, expc, thick] (zy) -- node[below, align=center]{$p(\mathbf{y} \mid \mathbf{z}_y)$\\[-1pt]{\footnotesize стадия II}} (y);
+% обучение: выравнивание с представлением стимула
+\draw[<->, dashed, cmod] (zc) to[bend left=40] node[above]{$\cos(\mathbf{z}_c, \mathbf{z}_y)$} (zy);
+\draw[->, dashed, black!55] (y) to[bend right=40] node[above]{$\mathcal{E}_y$} (zy);
+% скобки частей метода
+\draw[cmod] (-0.45,1.2) -- ++(0,0.1) -- (6.3,1.3) -- ++(0,-0.1);
+\node[cmod, anchor=south] at (2.92,1.32) {контрастивное обучение};
+% нижняя скобка: градиент от цвета стадии I к цвету стадии II
+\shade[left color=logc, right color=expc] (2.55,-1.293) rectangle (9.25,-1.267);
+\draw[logc] (2.55,-1.18) -- (2.55,-1.28);
+\draw[expc] (9.25,-1.18) -- (9.25,-1.28);
+\node[sblue, anchor=north] at (5.9,-1.3) {двухстадийная генерация};
+\end{tikzpicture}
+\end{document}

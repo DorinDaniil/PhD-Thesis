@@ -69,7 +69,7 @@
 \node[lbl] at (13.875,-2.85) {$\cdots$};
 \foreach \j/\t in {0/1,1/2,2/3,4/B} {
   \draw[cell, fill=yel] (9.5+\j*1.25,-4.1) rectangle (10.75+\j*1.25,-3.3);
-  \node at (10.125+\j*1.25,-3.7) {$\mathbf{z}_I^{\t}$};}
+  \node at (10.125+\j*1.25,-3.7) {$\mathbf{z}_y^{\t}$};}
 \draw[cell, fill=yel] (13.25,-4.1) rectangle (14.5,-3.3);
 \node at (13.875,-3.7) {$\cdots$};
 \node[lbl, anchor=west] at (15.95,-3.7) {Представления\\стимула};
@@ -112,7 +112,7 @@
 \foreach \k in {0,...,4} {\draw[cell, fill=diag] (9.5+\k*1.25,-4.6-\k*0.9) rectangle (10.75+\k*1.25,-5.5-\k*0.9);}
 \draw[cell, fill=gry] (9.5,-8.2) rectangle (10.75,-9.1);
 \foreach \i/\a in {0/1,1/2,2/3,4/B} {\foreach \j/\b in {0/1,1/2,2/3,4/B} {
-  \node at (10.125+\j*1.25,-5.05-\i*0.9) {$\mathbf{z}_c^{\a}\!\cdot\mathbf{z}_I^{\b}$};}}
+  \node at (10.125+\j*1.25,-5.05-\i*0.9) {$\mathbf{z}_c^{\a}\!\cdot\mathbf{z}_y^{\b}$};}}
 \foreach \j in {0,1,2,4} {\node at (10.125+\j*1.25,-7.75) {$\vdots$};}
 \foreach \i in {0,1,2,4} {\node at (13.875,-5.05-\i*0.9) {$\cdots$};}
 \node at (13.875,-7.75) {$\ddots$};
@@ -123,7 +123,7 @@
 
 % ---------- формула для выделенной пары ----------
 \draw[con, densely dashed, ->, >={Stealth[length=3pt,width=2.6pt]}] (10.5,-9.1) -- (10.5,-9.9) -- (11.55,-9.9);
-\node[lbl, anchor=west] at (11.65,-9.9) {$\dfrac{\langle \mathbf{z}_c^{B},\, \mathbf{z}_I^{1}\rangle}{\|\mathbf{z}_c^{B}\|\,\|\mathbf{z}_I^{1}\|}\; e^{\tau}$};
+\node[lbl, anchor=west] at (11.65,-9.9) {$\dfrac{\langle \mathbf{z}_c^{B},\, \mathbf{z}_y^{1}\rangle}{\|\mathbf{z}_c^{B}\|\,\|\mathbf{z}_y^{1}\|}\; e^{\tau}$};
 
 \end{tikzpicture}
 \end{document}

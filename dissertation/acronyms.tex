@@ -37,29 +37,33 @@
 % Условные обозначения: в порядке первого упоминания
 \nomenclature[b00]{$\mathcal{X}_{(m)}$}{пространство наблюдений модальности~$m$}
 \nomenclature[b01]{$\mathcal{X} = \mathcal{X}_{(1)} \times \cdots \times \mathcal{X}_{(M)}$}{совместное пространство наблюдений}
-\nomenclature[b02]{$\mathcal{X}_f, \mathcal{X}_e, \mathcal{X}_s$}{пространства наблюдений модальностей, в~приложении фМРТ, ЭЭГ и~временных рядов фМРТ}
-\nomenclature[b03]{$\mathcal{Y}$}{пространство стимулов}
-\nomenclature[b04]{$\mathbf{F}_i, \mathbf{E}_i, \mathbf{I}_i$}{отсчеты двух модальностей и~стимул $i$-го наблюдения, в~приложении фМРТ, ЭЭГ и~изображение}
-\nomenclature[b05]{$\mathbf{S}, \mathcal{T}, L$}{многоканальный временной ряд, его длина и~число категорий стимула}
+\nomenclature[b02]{$\mathcal{X}^{\mathcal{T}}$}{пространство многоканальных временных рядов из~$\mathcal{T}$ отсчетов одной модальности}
+\nomenclature[b03]{$\mathcal{Y}, \mathbf{y}$}{пространство стимулов и~стимул или его характеристика}
+\nomenclature[b04]{$\mathbf{F}(t), \mathbf{F}_i$}{отсчет сигнала в~момент~$t$ и~$i$-й объект выборки}
+\nomenclature[b04a]{$\mathbf{F}_{(1)}, \mathbf{F}_{(2)}$}{сигналы двух модальностей, в~приложении фМРТ и~ЭЭГ}
+\nomenclature[b05]{$\mathcal{T}, L$}{длина временного ряда и~число категорий стимула}
 \nomenclature[b06]{$\mathbf{u}$}{бинарный ряд стимула}
 \nomenclature[b07]{$\mathfrak{D}$}{обучающая выборка}
 \nomenclature[b08]{$N, N_y$}{объем выборки и~число объектов класса~$y$}
 \nomenclature[b09]{$\mathbf{g}$}{общее отображение декодирования $\mathcal{X} \to \mathcal{Y}$}
-\nomenclature[b10]{$\mathbf{q}$}{прогноз сигнала по~стимулу $\mathcal{Y} \to \mathcal{X}_f$}
-\nomenclature[b11]{$\mathbf{h}$}{классификатор временных рядов $\mathcal{X}_s \to \{1, \ldots, L\}$}
-\nomenclature[b12]{$\mathbf{f}$}{целевое отображение $\mathcal{X}_f \times \mathcal{X}_e \to \mathcal{Y}$}
+\nomenclature[b10]{$\mathbf{q}$}{прогноз сигнала по~стимулу $\mathcal{Y} \to \mathcal{X}$}
+\nomenclature[b11]{$\mathbf{h}$}{классификатор временных рядов $\mathcal{X}^{\mathcal{T}} \to \{1, \ldots, L\}$}
+\nomenclature[b12]{$\mathbf{f}$}{целевое отображение $\mathcal{X}_{(1)} \times \mathcal{X}_{(2)} \to \mathcal{Y}$}
 \nomenclature[b13]{$\Delta t$}{лаг сигнала, в~приложении гемодинамический лаг}
 \nomenclature[b14]{$\mu, \nu$}{частоты регистрации сигнала и~стимула}
 \nomenclature[b15]{$\boldsymbol{\delta}(t)$}{приращение сигнала между соседними отсчетами}
 \nomenclature[b16]{$\lambda$}{коэффициент $L_2$-регуляризации}
 \nomenclature[b17]{$\mathcal{M}, \mathcal{M}^{y}$}{бинарная маска активности (общая и~для класса~$y$)}
 \nomenclature[b18]{$k_s, h$}{размер ядра сжатия и~число активных каналов маски}
+\nomenclature[b18a]{$\mathbf{H}_i$}{временные ряды активных каналов $i$-го объекта}
 \nomenclature[b19]{$\mathbf{R}_i \in \mathbb{S}_{+}^{h}$}{ковариационная матрица активных каналов $i$-го объекта}
 \nomenclature[b20]{$\bar{\mathbf{R}}$}{риманово среднее ковариационных матриц}
 \nomenclature[b21]{$\mathbf{P}_i$}{проекция ковариационной матрицы на~касательное пространство}
-\nomenclature[b22]{$\mathcal{E}_f, \mathcal{E}_e, \mathcal{F}$}{энкодеры модальностей, в~приложении фМРТ и~ЭЭГ, и~модуль объединения}
-\nomenclature[b23]{$\mathbf{Z}_f, \mathbf{Z}_e, \mathbf{Z}_c, \mathbf{Z}_I$}{представления модальностей, объединенное представление и~представление стимула}
-\nomenclature[b24]{$d_f, d_e, d$}{размерности латентных пространств}
+\nomenclature[b22]{$\mathcal{E}_{(1)}, \mathcal{E}_{(2)}, \mathcal{F}, \mathcal{E}_y$}{энкодеры модальностей, модуль объединения и~предобученный энкодер стимула}
+\nomenclature[b23]{$\mathbf{Z}_{(1)}, \mathbf{Z}_{(2)}, \mathbf{Z}_c, \mathbf{Z}_y$}{представления модальностей, объединенное представление и~представление стимула для пакета объектов}
+\nomenclature[b23a]{$\mathbf{z}_c, \mathbf{z}_y$}{объединенное представление сигналов и~представление стимула одного объекта}
+\nomenclature[b23b]{$p(\mathbf{y} \mid \mathbf{z}_c)$}{условное распределение стимула при~объединенном представлении сигналов}
+\nomenclature[b24]{$d_{(1)}, d_{(2)}, d$}{размерности латентных пространств}
 \nomenclature[b25]{$\tau$}{обучаемая температура контрастивной функции потерь}
 \nomenclature[b26]{$\mathcal{L}_{\text{contr}}$}{контрастивная функция потерь}
 \nomenclature[b27]{$\mathcal{L}_{\text{prior}}$}{функция потерь априорной диффузионной модели}
@@ -69,7 +73,7 @@
 \nomenclature[b31]{$\omega(\mathbf{S})$}{спектральный разброс симметричной матрицы}
 \nomenclature[b32]{$g(\omega), c(\rho)$}{константы искажения расстояний касательной проекцией}
 \nomenclature[b33]{$\mathbf{M}, \bar{\mathbf{M}}$}{маска наблюдаемости многоканальной записи и~ее дополнение}
-\nomenclature[b34]{$\mathbf{E}_{\mathrm{obs}}, \mathbf{E}_{\mathrm{miss}}$}{наблюдаемая и~пропущенная части записи}
+\nomenclature[b34]{$\mathbf{F}_{\mathrm{obs}}, \mathbf{F}_{\mathrm{miss}}$}{наблюдаемая и~пропущенная части записи}
 \nomenclature[b35]{$\mathbf{D}$}{матрица расстояний между сенсорами}
 \nomenclature[b36]{$v_{\theta}$}{векторное поле модели восстановления пропусков}
 \nomenclature[b37]{$\mathbb{I}$}{единичная матрица}

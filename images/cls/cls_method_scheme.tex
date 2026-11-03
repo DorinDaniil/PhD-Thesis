@@ -30,9 +30,9 @@
 ]
 
 % ---------- заголовки столбцов ----------
-\node[hdr] at (26.5,6)  {объект\\[-1pt]$\mathbf{S}$};
+\node[hdr] at (26.5,6)  {объект\\[-1pt]$\mathbf{F}$};
 \node[hdr] at (80.2,5)  {маски $\mathcal{M}^{y}$\\[-1pt]{\scriptsize корреляция, лаг $\Delta t$}};
-\node[hdr] at (132.8,6) {ряды\\[-1pt]$\mathbf{Y}_{y}$};
+\node[hdr] at (132.8,6) {ряды\\[-1pt]$\mathbf{H}_{y}$};
 \node[hdr] at (185.1,6) {ковариации\\[-1pt]$\mathbf{R}_{y}$};
 \node[hdr] at (233.4,6) {признаки\\[-1pt]$\mathbf{p}_{y}$};
 \node[hdr] at (274.5,6) {признак\\[-1pt]$\mathbf{p}$};
@@ -67,7 +67,7 @@
   \foreach \k/\ph in {0/0, 1/120, 2/240} {
     \draw[\cw, line width=0.6pt] plot[domain=0:19.2, samples=48, smooth] ({123.2+\x}, {\yb+4.6+\k*7.05+1.7*sin(\x*28+\ph)});
   }
-  \node[lbl, anchor=north] at (132.8,\yb+24.9) {$\mathbf{Y}_{\lab}$};
+  \node[lbl, anchor=north] at (132.8,\yb+24.9) {$\mathbf{H}_{\lab}$};
   % --- ковариационная матрица 3x3 ---
   \fill[\cc] (173.7,\yt) rectangle (196.4,\yt+22.7);
   \foreach \k in {0,1,2} {\fill[\cd] (173.7+\k*7.567,\yt+\k*7.567) rectangle (181.267+\k*7.567,\yt+7.567+\k*7.567);}
