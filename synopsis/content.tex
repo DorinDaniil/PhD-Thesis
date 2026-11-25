@@ -21,7 +21,7 @@
 
 \input{common/characteristic} % Характеристика работы по структуре во введении и в автореферате не отличается (ГОСТ Р 7.0.11, пункты 5.3.1 и 9.2.1), потому её загружаем из одного и того же внешнего файла, предварительно задав форму выделения некоторым параметрам
 
-\pdfbookmark[1]{Объем и структура работы}{structure}\underline{\textbf{Объем и структура работы.}} Диссертация состоит из введения, четырех глав, заключения, списка сокращений и условных обозначений и списка литературы. Полный объем диссертации составляет 140~страниц, включая 31~рисунок и 14~таблиц. Список литературы содержит 165~наименований.
+\pdfbookmark[1]{Объем и структура работы}{structure}\underline{\textbf{Объем и структура работы.}} Диссертация состоит из введения, четырех глав, заключения, списка сокращений и условных обозначений и списка литературы. Полный объем диссертации составляет 142~страницы, включая 31~рисунок и 14~таблиц. Список литературы содержит 164~наименования.
 
 \pdfbookmark{Основное содержание работы}{description}                 % Закладка pdf
 \section*{Основное содержание работы}
@@ -64,7 +64,7 @@
     \label{fig:syn_mse_dt}
 \end{figure}
 
-\textbf{В третьей главе} рассматривается вторая постановка, дополняющая временное описание пространственным. Многоканальные временные ряды классифицируются по категориям стимула~\cite{dorin2025enhancing, dorin2025aij, dorin2025conf67mipt, dorin2026ioi}. Объект~--- ряд $\mathbf{F} = [\mathbf{F}(1), \ldots, \mathbf{F}(\mathcal{T})]$ из $\mathcal{T}$ отсчетов с меткой $y \in \{1, \ldots, L\}$. Объем $N$ выборки $\mathfrak{D} = \{(\mathbf{F}_i, y_i)\}_{i=1}^{N}$ одного источника мал. Предложенная методология DeSPoT (англ. Decoding with Spatio-Temporal characteristics) задает модель как суперпозицию $\mathbf{h} = \boldsymbol{\eta} \circ \boldsymbol{\psi} \circ \mathcal{A}$, где $\mathcal{A}$~--- пространственное сжатие отсчетов, $\boldsymbol{\psi} = \boldsymbol{\psi}_1 \oplus \cdots \oplus \boldsymbol{\psi}_L$~--- кодировщик, описывающий объект отдельно с точки зрения каждого класса, $\boldsymbol{\eta}$~--- классификатор. Схема модели приведена на Рисунке~\ref{fig:syn_cls}.
+\textbf{В третьей главе} рассматривается вторая постановка, дополняющая временное описание пространственным. Многоканальные временные ряды классифицируются по категориям стимула~\cite{dorin2025enhancing, dorin2025conf67mipt, dorin2026ioi}. Объект~--- ряд $\mathbf{F} = [\mathbf{F}(1), \ldots, \mathbf{F}(\mathcal{T})]$ из $\mathcal{T}$ отсчетов с меткой $y \in \{1, \ldots, L\}$. Объем $N$ выборки $\mathfrak{D} = \{(\mathbf{F}_i, y_i)\}_{i=1}^{N}$ одного источника мал. Предложенная методология DeSPoT (англ. Decoding with Spatio-Temporal characteristics) задает модель как суперпозицию $\mathbf{h} = \boldsymbol{\eta} \circ \boldsymbol{\psi} \circ \mathcal{A}$, где $\mathcal{A}$~--- пространственное сжатие отсчетов, $\boldsymbol{\psi} = \boldsymbol{\psi}_1 \oplus \cdots \oplus \boldsymbol{\psi}_L$~--- кодировщик, описывающий объект отдельно с точки зрения каждого класса, $\boldsymbol{\eta}$~--- классификатор. Схема модели приведена на Рисунке~\ref{fig:syn_cls}.
 
 \begin{figure}[h!]
     \centering
@@ -295,7 +295,6 @@ p(\mathbf{y} \mid \mathbf{z}_c) = \int p(\mathbf{y} \mid \mathbf{z}_y)\, p(\math
     \nocite{dorin2024conf66mipt}
     \nocite{dorin2025conf67mipt}
     \nocite{dorin2026conf68mipt}
-    \nocite{dorin2025aij}
     \nocite{dorin2026ioi}
 
     \ifnumgreater{\value{usefootcite}}{0}{

@@ -14,8 +14,9 @@ autolang=other,% многоязычная библиография
 clearlang=true,% внутренний сброс поля language, если он совпадает с языком из babel/polyglossia
 defernumbers=true,% нумерация проставляется после двух компиляций, зато позволяет выцеплять библиографию по ключевым словам и нумеровать не из большего списка
 sortcites=true,% сортировать номера затекстовых ссылок при цитировании (если в квадратных скобках несколько ссылок, то отображаться будут отсортированно, а не абы как)
-doi=false,% Показывать или нет ссылки на DOI
+doi=true,% Показывать DOI: ГОСТ Р 7.0.100-2018, п. 5.9.3.1, дата обращения к DOI не нужна
 isbn=false,% Показывать или нет ISBN, ISSN, ISRN
+url=false,% Не показывать URL: у печатных статей он необязателен, а без даты обращения не соответствует ГОСТ Р 7.0.100-2018
 ]{biblatex}[2016/09/17]
 \ltx@iffilelater{biblatex-gost.def}{2017/05/03}%
 {\toggletrue{bbx:gostbibliography}%
@@ -139,6 +140,10 @@ sorting=nyt,% алфавитная сортировка: автор, год, з�
         \map{% перекидываем значения полей language в поля langid, которыми пользуется biblatex
             \step[fieldsource=language, fieldset=langid, origfieldval, final]
             \step[fieldset=language, null]
+        }
+        \map{% записи без кириллицы в заглавии оформляются как иностранные: «[et al.]», «Vol.», «P.» (ГОСТ Р 7.0.100-2018)
+            \step[fieldsource=title, notmatch=\regexp{\p{Cyrillic}}, final]
+            \step[fieldset=langid, fieldvalue={english}]
         }
         \map{% перекидываем значения полей numpages в поля pagetotal, которыми пользуется biblatex
             \step[fieldsource=numpages, fieldset=pagetotal, origfieldval, final]
@@ -431,6 +436,12 @@ sorting=nyt,% алфавитная сортировка: автор, год, з�
 %}
 %\DeclareFieldFormat{url}{\bibstring{urlfrom}\addcolon\space\url{#1}}
 
+%%% DOI в форме ГОСТ Р 7.0.100-2018, п. 5.9.3.1: «DOI 10.1596/978-0-8213-6475-8», без двоеточия %%%
+%%% Ссылка ведет на doi.org; если DOI напечатан, но еще не зарегистрирован, адрес страницы статьи задается полем verba %%%
+\DeclareFieldFormat{doi}{DOI\addnbspace\ifhyperref
+  {\iffieldundef{verba}{\href{https://doi.org/#1}{\nolinkurl{#1}}}{\href{\thefield{verba}}{\nolinkurl{#1}}}}
+  {\nolinkurl{#1}}}
+
 %%% В списке литературы обозначение одной буквой диапазона страниц англоязычного источника %%%
 \DefineBibliographyStrings{english}{%
     pages = {p\adddot} %заглавность буквы затем по месту определяется работой самого biblatex
@@ -445,12 +456,12 @@ sorting=nyt,% алфавитная сортировка: автор, год, з�
 % \cyrdash --- тире «русской» длины, \textendash --- en-dash
 \DefineBibliographyExtras{russian}{%
   \protected\def\bibrangedash{%
-    \cyrdash\penalty\value{abbrvpenalty}}% almost unbreakable dash
+    \textendash\penalty\value{abbrvpenalty}}% короткое тире в диапазонах «С. 35–49», как у Соколова
   \protected\def\bibdaterangesep{\bibrangedash}%тире для дат
 }
 \DefineBibliographyExtras{english}{%
   \protected\def\bibrangedash{%
-    \cyrdash\penalty\value{abbrvpenalty}}% almost unbreakable dash
+    \textendash\penalty\value{abbrvpenalty}}% короткое тире в диапазонах «P. 35–49»
   \protected\def\bibdaterangesep{\bibrangedash}%тире для дат
 }
 
@@ -464,6 +475,8 @@ sorting=nyt,% алфавитная сортировка: автор, год, з�
 %%% Set low penalties for breaks at uppercase letters and lowercase letters
 %\setcounter{biburllcpenalty}{500} %управляет разрывами ссылок после маленьких букв RTFM biburllcpenalty
 %\setcounter{biburlucpenalty}{3000} %управляет разрывами ссылок после больших букв, RTFM biburlucpenalty
+%%% DOI без растяжки внутри: иначе biblatex раздвигает «10 . 1016/» у точек и косых черт %%%
+\biburlbigskip=0mu\relax
 
 %%% Список литературы с красной строки (без висячего отступа) %%%
 %\defbibenvironment{bibliography} % переопределяем окружение библиографии из gost-numeric.bbx пакета biblatex-gost
