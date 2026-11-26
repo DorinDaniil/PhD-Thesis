@@ -1,6 +1,6 @@
 % Обзорная схема работы (Рисунок 1.1 диссертации и Рисунок 1 автореферата).
 % Собирается отдельно: pdflatex scheme_overview.tex -> scheme_overview.pdf
-\documentclass[tikz,border=3pt]{standalone}
+\documentclass[tikz,border=2pt]{standalone}
 \usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel}
@@ -14,52 +14,64 @@
 \definecolor{lagc}{RGB}{70,110,160}
 \definecolor{soft}{RGB}{110,110,110}
 
+% Кегль надписей. Собственная ширина рисунка близка к ширине полосы диссертации (17,5 см), поэтому при
+% вставке на всю полосу надписи почти не уменьшаются: 12 pt в исходнике дают около 11,5 pt на странице.
+% Чтобы уместить такой кегль, столбцы имеют разную ширину: узкий для входа, широкий для метода,
+% узкий для результата; надписи результата набраны в две строки.
+\newcommand{\figfont}{\fontsize{12}{14.5}\selectfont}
+
 \begin{document}
 \begin{tikzpicture}[
-  font=\small, line cap=round, line join=round,
-  >={Stealth[length=5pt,width=4pt]},
-  box/.style={draw, rounded corners=3pt, thick, minimum width=5.2cm, minimum height=1.55cm, align=center, text width=4.9cm, inner sep=3pt},
-  rowlbl/.style={align=right, text width=2.8cm, font=\small},
-  arr/.style={->, thick},
-  lag/.style={->, thick, lagc, densely dashed},
-  lagline/.style={thick, lagc, densely dashed},
+  font=\figfont, line cap=round, line join=round,
+  >={Stealth[length=6pt,width=4.5pt]},
+  box/.style={draw, rounded corners=3pt, line width=0.8pt, minimum height=1.76cm, align=center, inner sep=3pt},
+  colL/.style={box, minimum width=3.7cm, text width=3.4cm},
+  colM/.style={box, minimum width=5.65cm, text width=5.35cm},
+  colR/.style={box, minimum width=3.25cm, text width=2.95cm},
+  rowlbl/.style={align=right, text width=3.3cm, inner sep=0pt},
+  arr/.style={->, line width=0.8pt},
+  lag/.style={->, line width=0.8pt, lagc, densely dashed},
+  lagline/.style={line width=0.8pt, lagc, densely dashed},
+  laglbl/.style={text=lagc, fill=white, inner sep=1.5pt},
 ]
 
 % ---------- строка I: временная динамика ----------
-\node[box, fill=fillA, draw=lineA] (a1) at (0,0) {стимул};
-\node[box, fill=fillA, draw=lineA, right=0.7cm of a1] (a2) {линейная авторегрессионная модель прогноза сигнала};
-\node[box, fill=darkA, draw=lineA, right=0.7cm of a2] (a3) {оценка лага $\Delta t$};
+\node[colL, fill=fillA, draw=lineA] (a1) at (0,0) {стимул};
+\node[colM, fill=fillA, draw=lineA, right=0.4cm of a1] (a2) {линейная\\авторегрессионная\\модель прогноза сигнала};
+\node[colR, fill=darkA, draw=lineA, right=0.4cm of a2] (a3) {оценка\\лага $\Delta t$};
 \draw[arr, lineA] (a1) -- (a2); \draw[arr, lineA] (a2) -- (a3);
-\node[rowlbl, left=0.5cm of a1] {I. Временная\\динамика};
+\node[rowlbl, left=0.3cm of a1] {I. Временная\\динамика};
 
 % ---------- строка II: пространство и время ----------
-\node[box, fill=fillB, draw=lineB, below=1.35cm of a1] (b1) {многоканальный временной ряд};
-\node[box, fill=fillB, draw=lineB, right=0.7cm of b1] (b2) {маски информативных каналов,\\риманова геометрия ковариаций};
-\node[box, fill=darkB, draw=lineB, right=0.7cm of b2] (b3) {категория стимула};
+\node[colL, fill=fillB, draw=lineB, below=0.95cm of a1] (b1) {многоканальный\\временной ряд};
+\node[colM, fill=fillB, draw=lineB, right=0.4cm of b1] (b2) {маски информативных\\каналов, риманова\\геометрия ковариаций};
+\node[colR, fill=darkB, draw=lineB, right=0.4cm of b2] (b3) {категория\\стимула};
 \draw[arr, lineB] (b1) -- (b2); \draw[arr, lineB] (b2) -- (b3);
-\node[rowlbl, left=0.5cm of b1] {II. Пространство\\и время};
+\node[rowlbl, left=0.3cm of b1] {II. Пространство\\и время};
 
 % ---------- строка III: мультимодальность ----------
-\node[box, fill=fillC, draw=lineC, below=1.35cm of b1] (c1) {две синхронно\\регистрируемые модальности};
-\node[box, fill=fillC, draw=lineC, right=0.7cm of c1] (c2) {восстановление каналов,\\энкодеры, объединение\\представлений};
-\node[box, fill=darkC, draw=lineC, right=0.7cm of c2] (c3) {реконструкция стимула};
+\node[colL, fill=fillC, draw=lineC, below=0.95cm of b1] (c1) {две синхронно\\регистрируемые\\модальности};
+\node[colM, fill=fillC, draw=lineC, right=0.4cm of c1] (c2) {восстановление каналов,\\кодировщики, объединение\\представлений};
+\node[colR, fill=darkC, draw=lineC, right=0.4cm of c2] (c3) {реконструкция\\стимула};
 \draw[arr, lineC] (c1) -- (c2); \draw[arr, lineC] (c2) -- (c3);
-\node[rowlbl, left=0.5cm of c1] {III. Мульти-\\модальность};
+\node[rowlbl, left=0.3cm of c1] {III. Мульти-\\модальность};
 
 % ---------- передача лага ----------
-\coordinate (r) at ($(a3.east)+(0.45,0)$);
-\coordinate (b2u) at ($(b2.south)+(0,-0.7)$);
-\coordinate (c1u) at ($(c1.south)+(0,-0.7)$);
+\coordinate (r) at ($(a3.east)+(0.4,0)$);
+\coordinate (b2u) at ($(b2.south)+(0,-0.5)$);
+\coordinate (c1u) at ($(c1.south)+(0,-0.5)$);
 \draw[lagline] (a3.east) -- (r) -- (r |- b2u) -- (b2u);
-\draw[lag] (b2u) -- (b2.south) node[midway, right=3pt, font=\small, text=lagc, fill=white, inner sep=1pt] {$\Delta t$};
+\draw[lag] (b2u) -- (b2.south);
+\node[laglbl, anchor=west] at ($(b2u)!0.5!(b2.south)+(0.12,0)$) {$\Delta t$};
 \draw[lagline] (r |- b2u) -- (r |- c1u) -- (c1u);
-\draw[lag] (c1u) -- (c1.south) node[midway, right=3pt, font=\small, text=lagc, fill=white, inner sep=1pt] {$\Delta t$};
+\draw[lag] (c1u) -- (c1.south);
+\node[laglbl, anchor=west] at ($(c1u)!0.5!(c1.south)+(0.12,0)$) {$\Delta t$};
 
 % ---------- ось усложнения ----------
-\coordinate (top) at ($(a1.north west)+(-3.7,0)$);
-\coordinate (bot) at ($(c1.south west)+(-3.7,0)$);
-\draw[->, soft, thick] (top) -- (bot);
-\node[rotate=90, text=soft, font=\small, anchor=south] at ($(top)!0.5!(bot)+(-0.12,0)$) {усложнение учитываемой структуры};
+\coordinate (top) at ($(a1.north west)+(-3.85,0)$);
+\coordinate (bot) at ($(c1.south west)+(-3.85,0)$);
+\draw[->, soft, line width=0.8pt] (top) -- (bot);
+\node[rotate=90, text=soft, anchor=south, inner sep=2pt] at ($(top)!0.5!(bot)$) {усложнение учитываемой структуры};
 
 \end{tikzpicture}
 \end{document}

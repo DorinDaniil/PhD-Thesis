@@ -317,3 +317,7 @@
 
 \SetKwInOut{KwIn}{Вход}
 \SetKwInOut{KwOut}{Выход}
+
+% Категория ВАК и квартиль журнала из поля addendum записей biblio/author.bib печатаются только в списке
+% публикаций автореферата, в общем списке литературы диссертации поле не выводится
+\AtEndPreamble{\AtEveryBibitem{\clearfield{addendum}}}
